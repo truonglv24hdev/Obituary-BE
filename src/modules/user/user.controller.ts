@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import UserService from "./user.service";
 import UserInfoDto from "./user.dto";
-import userModel from './user.model';
 
 interface AuthRequest extends Request {
   user?: {

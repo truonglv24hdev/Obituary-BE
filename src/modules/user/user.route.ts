@@ -19,6 +19,49 @@ export default class UserRoute implements Route {
   }
 
   private initializeRoutes() {
+    /**
+     * @openapi
+     * '/api/user/{id}':
+     *  put:
+     *     tags:
+     *     - User
+     *     summary: Modify a user
+     *     parameters:
+     *      - name: id
+     *        in: path
+     *        description: The unique id of the user
+     *        required: true
+     *     requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *           schema:
+     *            type: object
+     *            properties:
+     *              first_name:
+     *                type: string
+     *              last_name:
+     *                type: string
+     *              email:
+     *                type: string
+     *              memorials:
+     *                type: array
+     *                items:
+     *                  type: string
+     *              address:
+     *                type: string
+     *              country:
+     *                type: string
+     *              code:
+     *                type: string
+     *     responses:
+     *      200:
+     *        description: Modified
+     *      400:
+     *        description: Bad Request
+     *      404:
+     *        description: Not Found
+     */
     this.router.put(
       this.path + "/:id",
       upload.array("memorials"),
@@ -26,8 +69,110 @@ export default class UserRoute implements Route {
       validatorMiddleware(UserInfoDto, true),
       this.userController.updateUserById
     );
+
+    /**
+     * @openapi
+     * '/api/user':
+     *  get:
+     *     tags:
+     *     - User
+     *     summary: Get all users
+     *     responses:
+     *       200:
+     *         description: Success
+     *         content:
+     *          application/json:
+     *            schema:
+     *              type: array
+     *              items:
+     *                type: object
+     *                properties:
+     *                  id:
+     *                    type: number
+     *                  first_name:
+     *                    type: string
+     *                  last_name:
+     *                    type: string
+     *                  email:
+     *                    type: string
+     *                  memorials:
+     *                    type: array
+     *                    items:
+     *                      type: string
+     *                  address:
+     *                    type: string
+     *                  country:
+     *                    type: string
+     *                  code:
+     *                    type: string
+     *       400:
+     *         description: Bad request
+     */
     this.router.get(this.path, this.userController.getUserPagination);
+
+    /**
+     * @openapi
+     * '/api/user/{id}':
+     *  get:
+     *     tags:
+     *     - User
+     *     summary: Get user by id
+     *     parameters:
+     *      - name: id
+     *        in: path
+     *        description: The unique id of the user
+     *        required: true
+     *     responses:
+     *       200:
+     *         description: Success
+     *         content:
+     *          application/json:
+     *            schema:
+     *              type: array
+     *              items:
+     *                type: object
+     *                properties:
+     *                  id:
+     *                    type: number
+     *                  first_name:
+     *                    type: string
+     *                  last_name:
+     *                    type: string
+     *                  email:
+     *                    type: string
+     *                  memorials:
+     *                    type: array
+     *                    items:
+     *                      type: string
+     *                  address:
+     *                    type: string
+     *                  country:
+     *                    type: string
+     *                  code:
+     *                    type: string
+     *       400:
+     *         description: Bad request
+     */
     this.router.get(this.path + "/:id", this.userController.getUserById);
+    
+    /**
+     * @openapi
+     * '/api/user/{id}':
+     *  delete:
+     *     tags:
+     *     - User
+     *     summary: Delete user by id
+     *     parameters:
+     *      - name: id
+     *        in: path
+     *        description: The unique id of the user
+     *        required: true
+     *     responses:
+     *       200:
+     *         description: Success
+     *       400:
+     *         description: Bad request
+     */
     this.router.delete(this.path + "/:id", this.userController.deleteUser);
   }
 }

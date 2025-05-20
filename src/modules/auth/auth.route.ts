@@ -15,11 +15,62 @@ export default class AuthRoute implements Route {
   }
 
   private initializeRoutes() {
+    /**
+     * @openapi
+     * '/api/sign-up':
+     *  post:
+     *     tags:
+     *     - Auth
+     *     summary: Sign-up account
+     *     requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *           schema:
+     *            type: object
+     *            properties:
+     *              first_name:
+     *                type: string
+     *              email:
+     *                type: string
+     *              password:
+     *                type: string
+     *     responses:
+     *       201:
+     *         description: Create success
+     *       400:
+     *         description: Bad request
+     */
     this.router.post(
       this.path + "/sign-up",
       validatorMiddleware(SignUpDto, true),
       this.authController.signUp
     );
+
+    /**
+     * @openapi
+     * '/api/sign-in':
+     *  post:
+     *     tags:
+     *     - Auth
+     *     summary: Sign-in account
+     *     requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *           schema:
+     *            type: object
+     *            properties:
+     *              email:
+     *                type: string
+     *              password:
+     *                type: string
+     *     responses:
+     *       200:
+     *         description: Success
+     *       400:
+     *         description: Bad request
+     */
     this.router.post(
       this.path + "/sign-in",
       validatorMiddleware(SignInDto, true),

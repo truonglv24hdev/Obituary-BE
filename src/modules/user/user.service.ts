@@ -4,9 +4,7 @@ import { isEmptyObject } from "../../core/utils/helper";
 import HttpException from "../../core/middleware/httpException";
 import bcrypt from "bcryptjs";
 import IUser from "./user.interface";
-import jwt from "jsonwebtoken";
 import IPagination from "../../core/interface/pagination.interface";
-import { email } from "envalid";
 
 class UserService {
   public userSchema = UserSchema;

@@ -6,6 +6,8 @@ import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
 import Logger from "./core/utils/Logger";
+import swaggerDocs from './swagger'
+
 
 class App {
   public app: express.Application;
@@ -25,6 +27,7 @@ class App {
   public listen() {
     this.app.listen(this.port, () => {
       console.log(`Server is listening on port ${this.port}`);
+      swaggerDocs(this.app, this.port)
     });
   }
 
