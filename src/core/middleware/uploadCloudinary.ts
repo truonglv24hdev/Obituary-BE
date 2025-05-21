@@ -4,9 +4,9 @@ import streamifier from 'streamifier';
 
 // Cấu hình Cloudinary
 cloudinary.config({ 
-  cloud_name: process.env.CLOUD_NAME, 
-  api_key: process.env.API_KEY, 
-  api_secret: process.env.API_SECRET 
+  cloud_name: process.env.CLOUD_NAME || "dowtsdg7h", 
+  api_key: process.env.API_KEY || "856547751684482", 
+  api_secret: process.env.API_SECRET || "tLo59woA-krx-uPwFK0CRK2sHi4" 
 });
 
 interface CloudinaryResult {

@@ -30,10 +30,14 @@ export default class UsersController {
     next: NextFunction
   ) => {
     try {
-      const model: UserInfoDto = req.body;
-      if(req.files){
-        req.body.memorials = req.body.uploadedUrls
+      // Gán memorials từ uploadedUrls trước
+      console.log(req.files && req.body.memorials)
+      if (req.files && req.body.memorials) {
+        req.body.memorials = req.body.memorials;
       }
+
+      // Gán model sau khi req.body đã đầy đủ
+      const model: UserInfoDto = req.body;
       const user = await this.userService.updateUserById(req.params.id, model);
       res.status(200).json(user);
     } catch (error) {
@@ -77,5 +81,4 @@ export default class UsersController {
       next(error);
     }
   };
-
 }

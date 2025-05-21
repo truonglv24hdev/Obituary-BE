@@ -70,11 +70,16 @@ export default class MemorialRoute implements Route {
 
     /**
      * @openapi
-     * '/api/memorial':
+     * '/api/memorial/{id}':
      *  put:
      *     tags:
      *     - Memorial
      *     summary: Modify a memorial
+     *     parameters:
+     *      - name: id
+     *        in: path
+     *        description: The unique id of the memorial
+     *        required: true
      *     requestBody:
      *      required: true
      *      content:

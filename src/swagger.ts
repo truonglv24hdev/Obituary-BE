@@ -7,7 +7,7 @@ const options: Options = {
     openapi: "3.0.0",
     info: {
       title: "Obituary API",
-      description: "Example of CRUD API",
+      description: "Obituary of CRUD API",
       version: "1.0.0",
     },
   },

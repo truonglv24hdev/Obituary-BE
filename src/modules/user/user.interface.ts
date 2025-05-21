@@ -1,3 +1,5 @@
+import { ERole } from "../../types";
+
 export default interface IUser {
   _id: string;
   first_name: string;
@@ -9,4 +11,5 @@ export default interface IUser {
   code: string;
   googleId: string;
   facebookId: string;
+  role: ERole
 }

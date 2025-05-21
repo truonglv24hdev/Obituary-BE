@@ -11,6 +11,16 @@ const RSVPSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    location: {
+      type: String,
+      require: true,
+    },
+    date: {
+      type: Date,
+    },
+    time:{
+      type: String
+    },
     verification: {
       type: Boolean,
       default: false,
@@ -21,9 +31,7 @@ const RSVPSchema = new mongoose.Schema(
     contact: {
       type: String,
     },
-    date: {
-      type: Date,
-    },
+    
   },
   {
     timestamps: true,

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import IUser from "./user.interface";
+import { ERole } from "../../types";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -46,6 +47,11 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
     },
+    role:{
+      type: String,
+      enum: Object.values(ERole),
+      default: ERole.USER,
+    }
   },
   {
     timestamps: true,

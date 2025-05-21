@@ -13,9 +13,7 @@ class UserService {
     userId: string,
     model: UserInfoDto
   ): Promise<IUser> {
-    if (isEmptyObject(model)) {
-      throw new HttpException(400, "Model is empty");
-    }
+    
 
     const user = await this.userSchema.findById(userId);
     if (!user) {
