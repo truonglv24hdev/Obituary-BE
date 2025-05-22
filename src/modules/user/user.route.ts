@@ -4,10 +4,11 @@ import UsersController from "./user.controller";
 import validatorMiddleware from "../../core/middleware/validation.middleware";
 import UserInfoDto from "./user.dto";
 import multer from "multer";
-import uploadMultiple from "../../core/middleware/uploadCloudinary";
-
-const upload = multer({ storage: multer.memoryStorage() });
-
+import { storage } from "../../core/utils/storage";
+const upload = multer({
+  storage: storage,
+});
+import authMiddleware from "../../core/middleware/auth.middleware";
 export default class UserRoute implements Route {
   public path = "/api/user";
   public router = Router();
@@ -64,9 +65,8 @@ export default class UserRoute implements Route {
      */
     this.router.put(
       this.path + "/:id",
+      authMiddleware,
       upload.array("memorials"),
-      uploadMultiple,
-      validatorMiddleware(UserInfoDto, true),
       this.userController.updateUserById
     );
 
@@ -153,8 +153,12 @@ export default class UserRoute implements Route {
      *       400:
      *         description: Bad request
      */
-    this.router.get(this.path + "/:id", this.userController.getUserById);
-    
+    this.router.get(
+      this.path + "/:id",
+      authMiddleware,
+      this.userController.getUserById
+    );
+
     /**
      * @openapi
      * '/api/user/{id}':

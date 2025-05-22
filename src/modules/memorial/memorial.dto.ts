@@ -8,9 +8,7 @@ import {
 
 export default class MemorialDto {
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  public memorials: string[] | undefined;
+  public picture: string | undefined;
 
   @IsNotEmpty()
   public first_name: string | undefined;

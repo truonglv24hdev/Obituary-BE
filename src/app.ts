@@ -7,6 +7,7 @@ import cors from "cors";
 import helmet from "helmet";
 import Logger from "./core/utils/Logger";
 import swaggerDocs from './swagger'
+import * as path from 'path';
 
 
 class App {
@@ -18,7 +19,15 @@ class App {
     this.app = express();
     this.port = process.env.PORT || 5000;
     this.production = process.env.NODE_ENV == "production" ? true : false;
-
+    this.app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
+    this.app.use('/videos', express.static(path.join(__dirname, '../public/videos'), {
+      setHeaders: (res, path) => {
+        if (path.endsWith('.mp4')) {
+          res.set('Content-Type', 'video/mp4');
+          res.set('Accept-Ranges', 'bytes');
+        }
+      }
+    }));
     this.connectDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);

@@ -3,6 +3,7 @@ import { Router } from "express";
 import RSVPController from "./rsvp.controller";
 import validatorMiddleware from "../../core/middleware/validation.middleware";
 import RSVPDto from "./rsvp.dto";
+import authMiddleware from "../../core/middleware/auth.middleware";
 export default class RSVPRoute implements Route {
   public path = "/api/rsvp";
   public router = Router();
@@ -52,6 +53,7 @@ export default class RSVPRoute implements Route {
      */
     this.router.post(
       this.path,
+      authMiddleware,
       validatorMiddleware(RSVPDto, true),
       this.rsvpController.createRSVP
     );
@@ -146,6 +148,7 @@ export default class RSVPRoute implements Route {
      */
     this.router.delete(
       this.path + "/:id",
+      authMiddleware,
       this.rsvpController.deleteRSVPById
     );
   }

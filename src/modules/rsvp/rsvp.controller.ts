@@ -1,11 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import RSVPService from "./rsvp.service";
 import RSVPDto from "./rsvp.dto";
-interface AuthRequest extends Request {
-  user?: {
-    id: string;
-  };
-}
 
 export default class RSVPController {
   private rsvpService = new RSVPService();

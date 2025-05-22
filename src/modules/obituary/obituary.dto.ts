@@ -34,11 +34,10 @@ export default class ObituaryDto {
   @IsNotEmpty()
   @IsArray()
   @ValidateNested({ each: true })
-  public timeline: string[] | undefined;
+  public timeline: ITimeLine[] | undefined;
 
   @IsNotEmpty()
-  @IsBoolean()
-  public quoteEvent: boolean | undefined;
+  public quoteEvent: string | undefined;
 
   @IsOptional()
   @IsArray()

@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import UserService from "./user.service";
 import UserInfoDto from "./user.dto";
 
-interface AuthRequest extends Request {
-  user?: {
-    id: string;
-  };
-}
+// interface AuthRequest extends Request {
+//   user?: {
+//     id: string;
+//   };
+// }
 
 export default class UsersController {
   private userService = new UserService();
@@ -30,14 +30,10 @@ export default class UsersController {
     next: NextFunction
   ) => {
     try {
-      // Gán memorials từ uploadedUrls trước
-      console.log(req.files && req.body.memorials)
-      if (req.files && req.body.memorials) {
-        req.body.memorials = req.body.memorials;
-      }
-
-      // Gán model sau khi req.body đã đầy đủ
       const model: UserInfoDto = req.body;
+      model.memorials = (req.files as Express.Multer.File[])?.map(
+        (file) => `/uploads/${file.filename}`
+      );
       const user = await this.userService.updateUserById(req.params.id, model);
       res.status(200).json(user);
     } catch (error) {

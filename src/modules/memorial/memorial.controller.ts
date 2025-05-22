@@ -2,12 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import MemorialService from "./memorial.service";
 import MemorialDto from "./memorial.dto";
 
-interface AuthRequest extends Request {
-  user?: {
-    id: string;
-  };
-}
-
 export default class MemorialController {
   private memorialService = new MemorialService();
 
@@ -18,9 +12,7 @@ export default class MemorialController {
   ) => {
     try {
       const model: MemorialDto = req.body;
-      if (req.files) {
-        req.body.picture = req.body.uploadedUrls;
-      }
+      model.picture = `/uploads/${req.file?.originalname}`;
       const memorial = await this.memorialService.createMemorial(model);
       res.status(200).json(memorial);
     } catch (error) {
@@ -35,9 +27,7 @@ export default class MemorialController {
   ) => {
     try {
       const model: MemorialDto = req.body;
-      if (req.files) {
-        req.body.picture = req.body.uploadedUrls;
-      }
+      model.picture = `/uploads/${req.file?.originalname}`;
       const memorial = await this.memorialService.updateMemorial(
         req.params.id,
         model

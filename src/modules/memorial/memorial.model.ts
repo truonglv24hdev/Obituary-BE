@@ -5,7 +5,7 @@ import { EGender } from "../../types";
 const MemorialSchema = new mongoose.Schema(
   {
     picture: {
-      type: [String],
+      type: String,
       require: false,
     },
     first_name: {

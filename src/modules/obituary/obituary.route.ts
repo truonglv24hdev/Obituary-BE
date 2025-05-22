@@ -3,6 +3,10 @@ import { Router } from "express";
 import validatorMiddleware from "../../core/middleware/validation.middleware";
 import ObituaryDto from "./obituary.dto";
 import ObituaryController from "./obituary.controller";
+import multer from "multer";
+import { storageVideo, storage } from "../../core/utils/storage";
+import uploadMixed from "../../core/middleware/uploadMixed ";
+import authMiddleware from "../../core/middleware/auth.middleware";
 
 export default class ObituaryRoute implements Route {
   public path = "/api/obituary";
@@ -76,9 +80,15 @@ export default class ObituaryRoute implements Route {
      *      400:
      *        description: Bad Request
      */
-    this.router.post(this.path, this.ObituaryController.createObituary);
-    
-      /**
+    this.router.post(
+      this.path,
+      authMiddleware,
+      uploadMixed,
+      validatorMiddleware(ObituaryDto, true),
+      this.ObituaryController.createObituary
+    );
+
+    /**
      * @openapi
      * '/api/obituary':
      *  put:
@@ -144,7 +154,13 @@ export default class ObituaryRoute implements Route {
      *      404:
      *        description: Not found
      */
-    this.router.put(this.path+ "/:id", this.ObituaryController.updateObituaryById);
+    this.router.put(
+      this.path + "/:id",
+      authMiddleware,
+      uploadMixed,
+      validatorMiddleware(ObituaryDto, true),
+      this.ObituaryController.updateObituaryById
+    );
 
     /**
      * @openapi
@@ -164,7 +180,10 @@ export default class ObituaryRoute implements Route {
      *      404:
      *        description: Not found
      */
-    this.router.get(this.path+ "/:id", this.ObituaryController.getObituaryById);
+    this.router.get(
+      this.path + "/:id",
+      this.ObituaryController.getObituaryById
+    );
 
     /**
      * @openapi
@@ -184,7 +203,10 @@ export default class ObituaryRoute implements Route {
      *      400:
      *        description: Bad Request
      */
-    this.router.delete(this.path+ "/:id", this.ObituaryController.deleteObituaryById);
+    this.router.delete(
+      this.path + "/:id",
+      authMiddleware,
+      this.ObituaryController.deleteObituaryById
+    );
   }
-
 }

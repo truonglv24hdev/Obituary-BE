@@ -3,10 +3,13 @@ import { Router } from "express";
 import MemorialController from "./memorial.controller";
 import validatorMiddleware from "../../core/middleware/validation.middleware";
 import multer from "multer";
-import uploadMultiple from "../../core/middleware/uploadCloudinary";
+import { storage } from "../../core/utils/storage";
 import MemorialDto from "./memorial.dto";
+import authMiddleware from "../../core/middleware/auth.middleware";
 
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({
+  storage: storage,
+});
 
 export default class MemorialRoute implements Route {
   public path = "/api/memorial";
@@ -34,9 +37,7 @@ export default class MemorialRoute implements Route {
      *            type: object
      *            properties:
      *              picture:
-     *                type: array
-     *                items:
-     *                  type: string
+     *                type: string
      *              first_name:
      *                type: string
      *              middle_name:
@@ -62,8 +63,8 @@ export default class MemorialRoute implements Route {
      */
     this.router.post(
       this.path,
-      upload.array("picture"),
-      uploadMultiple,
+      authMiddleware,
+      upload.single("picture"),
       validatorMiddleware(MemorialDto, true),
       this.memorialController.createMemorial
     );
@@ -88,9 +89,7 @@ export default class MemorialRoute implements Route {
      *            type: object
      *            properties:
      *              picture:
-     *                type: array
-     *                items: 
-     *                  type: string
+     *                type: string
      *              first_name:
      *                type: string
      *              middle_name:
@@ -116,8 +115,8 @@ export default class MemorialRoute implements Route {
      */
     this.router.put(
       this.path + "/:id",
-      upload.array("picture"),
-      uploadMultiple,
+      authMiddleware,
+      upload.single("picture"),
       validatorMiddleware(MemorialDto, true),
       this.memorialController.updateMemorialById
     );
@@ -143,9 +142,7 @@ export default class MemorialRoute implements Route {
      *            type: object
      *            properties:
      *              picture:
-     *                type: array
-     *                items: 
-     *                  type: string
+     *                type: string
      *              first_name:
      *                type: string
      *              middle_name:
@@ -164,7 +161,10 @@ export default class MemorialRoute implements Route {
      *       404:
      *         description: Memorial not found
      */
-    this.router.get(this.path + "/:id", this.memorialController.getMemorialById);
+    this.router.get(
+      this.path + "/:id",
+      this.memorialController.getMemorialById
+    );
 
     /**
      * @openapi
@@ -186,6 +186,10 @@ export default class MemorialRoute implements Route {
      *       404:
      *         description: Memorial not found
      */
-    this.router.delete(this.path + "/:id", this.memorialController.deleteMemorial);
+    this.router.delete(
+      this.path + "/:id",
+      authMiddleware,
+      this.memorialController.deleteMemorial
+    );
   }
 }
