@@ -99,8 +99,9 @@ export default class RSVPRoute implements Route {
      *      400:
      *        description: Bad Request
      */
-    this.router.post(
+    this.router.put(
       this.path + "/:id",
+      authMiddleware,
       validatorMiddleware(RSVPDto, true),
       this.rsvpController.updateRSVPById
     );
@@ -123,10 +124,7 @@ export default class RSVPRoute implements Route {
      *      400:
      *        description: Bad Request
      */
-    this.router.get(
-      this.path + "/:id",
-      this.rsvpController.getRSVPById
-    );
+    this.router.get(this.path + "/:id", this.rsvpController.getRSVPById);
 
     /**
      * @openapi

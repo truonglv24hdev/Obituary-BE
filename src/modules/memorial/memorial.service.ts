@@ -5,17 +5,24 @@ import HttpException from "../../core/middleware/httpException";
 import IMemorial from "./memorial.interface";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import condolencesModel from "../condolences/condolences.model";
 dayjs.extend(customParseFormat);
 
 class MemorialService {
   public memorialSchema = MemorialSchema;
 
-  public async createMemorial(model: MemorialDto): Promise<IMemorial> {
+  public async createMemorial(
+    userId: string,
+    model: MemorialDto
+  ): Promise<IMemorial> {
     if (isEmptyObject(model)) {
       throw new HttpException(400, "Model is empty");
     }
 
-    const memorial = await this.memorialSchema.create(model);
+    const memorial = await this.memorialSchema.create({
+      user: userId,
+      ...model,
+    });
     if (!memorial) {
       throw new HttpException(400, "Memorial id not can create");
     }
@@ -25,14 +32,24 @@ class MemorialService {
 
   public async updateMemorial(
     memorialId: string,
+    userId: string,
     model: MemorialDto
   ): Promise<IMemorial> {
     if (isEmptyObject(model)) {
       throw new HttpException(400, "Model is empty");
     }
 
-    const memorialUpdate = await this.memorialSchema.findByIdAndUpdate(
-      memorialId,
+    const memorial = await this.memorialSchema.findOne({
+      _id: memorialId,
+      user: userId,
+    });
+
+    if (!memorial) {
+      throw new HttpException(400, "memorial not found");
+    }
+
+    const memorialUpdate = await this.memorialSchema.findOneAndUpdate(
+      { _id: memorialId, user: userId },
       model,
       { new: true }
     );
@@ -42,7 +59,9 @@ class MemorialService {
   }
 
   public async getMemorialById(memorialId: string): Promise<IMemorial> {
-    const memorial = await this.memorialSchema.findById(memorialId);
+    const memorial = await this.memorialSchema
+      .findById(memorialId)
+      .populate({ path: "condolences", model: condolencesModel });
     if (!memorial) {
       throw new HttpException(404, "memorial is not found");
     }
@@ -50,8 +69,14 @@ class MemorialService {
     return memorial;
   }
 
-  public async deleteMemorial(userId: string): Promise<IMemorial> {
-    const result = await this.memorialSchema.findByIdAndDelete(userId);
+  public async deleteMemorial(
+    memorialId: string,
+    userId: string
+  ): Promise<IMemorial> {
+    const result = await this.memorialSchema.findOneAndDelete({
+      _id: memorialId,
+      user: userId,
+    });
     if (!result) {
       throw new HttpException(404, "Memorial not found");
     }

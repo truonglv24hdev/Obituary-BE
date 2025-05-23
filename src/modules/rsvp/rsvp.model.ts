@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import IRSVP from "./rsvp.interface";
 
 const RSVPSchema = new mongoose.Schema(
@@ -10,6 +10,10 @@ const RSVPSchema = new mongoose.Schema(
     last_name: {
       type: String,
       require: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
     },
     location: {
       type: String,

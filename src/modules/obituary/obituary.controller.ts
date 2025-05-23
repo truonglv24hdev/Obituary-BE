@@ -11,25 +11,32 @@ export default class ObituaryController {
     next: NextFunction
   ) => {
     try {
-      const files = req.files as {
-        gallery?: Express.Multer.File[];
-        video?: Express.Multer.File[];
-      };
-
-      const familyTree = JSON.parse(req.body.familyTree);
-      const timeline = JSON.parse(req.body.timeline);
-
-      const model: ObituaryDto = {
-        ...req.body,
-        familyTree: familyTree,
-        timeline: timeline,
-        gallery: (files.gallery ?? []).map(
-          (file) => `/uploads/${file.filename}`
-        ),
-        video: (files.video ?? []).map((file) => `/uploads/${file.filename}`),
-      };
-      const rsvp = await this.ObituaryService.createObituary(model);
-      res.status(200).json(rsvp);
+      const userId = req.user.id;
+      if (req.files) {
+        const files = req.files as {
+          gallery?: Express.Multer.File[];
+          video?: Express.Multer.File[];
+        };
+        const model: ObituaryDto = {
+          ...req.body,
+          gallery: (files.gallery ?? []).map(
+            (file) => `/uploads/${file.filename}`
+          ),
+          video: (files.video ?? []).map((file) => `/uploads/${file.filename}`),
+        };
+        const obituary = await this.ObituaryService.createObituary(
+          userId,
+          model
+        );
+        res.status(200).json(obituary);
+      } else {
+        const model: ObituaryDto = req.body;
+        const obituary = await this.ObituaryService.createObituary(
+          userId,
+          model
+        );
+        res.status(200).json(obituary);
+      }
     } catch (error) {
       next(error);
     }
@@ -41,12 +48,34 @@ export default class ObituaryController {
     next: NextFunction
   ) => {
     try {
-      const model: ObituaryDto = req.body;
-      const rsvp = await this.ObituaryService.updateObituaryById(
-        req.params.id,
-        model
-      );
-      res.status(200).json(rsvp);
+      const userId = req.user.id;
+      if (req.files) {
+        const files = req.files as {
+          gallery?: Express.Multer.File[];
+          video?: Express.Multer.File[];
+        };
+        const model: ObituaryDto = {
+          ...req.body,
+          gallery: (files.gallery ?? []).map(
+            (file) => `/uploads/${file.filename}`
+          ),
+          video: (files.video ?? []).map((file) => `/uploads/${file.filename}`),
+        };
+        const obituary = await this.ObituaryService.updateObituaryById(
+          req.params.id,
+          userId,
+          model
+        );
+        res.status(200).json(obituary);
+      } else {
+        const model: ObituaryDto = req.body;
+        const obituary = await this.ObituaryService.updateObituaryById(
+          req.params.id,
+          userId,
+          model
+        );
+        res.status(200).json(obituary);
+      }
     } catch (error) {
       next(error);
     }

@@ -17,10 +17,11 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     ) as DataStoreInToken;
 
     if (!req.user) {
-      req.user = { id: "" };
+      req.user = { id: "", role: "" };
     }
 
     req.user.id = user.id;
+    req.user.role = user.role;
     next();
   } catch (error) {
     res.status(401).json({ message: "token not vail" });

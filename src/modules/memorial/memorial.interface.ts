@@ -2,6 +2,7 @@ import { EGender } from "../../types";
 
 export default interface IMemorial {
   _id: string;
+  user: string;
   picture: string;
   first_name: string;
   middle_name: string;
@@ -9,4 +10,5 @@ export default interface IMemorial {
   gender: EGender;
   born: Date;
   death: Date;
+  condolences: string[];
 }

@@ -1,9 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import IMemorial from "./memorial.interface";
 import { EGender } from "../../types";
 
 const MemorialSchema = new mongoose.Schema(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
     picture: {
       type: String,
       require: false,
@@ -31,6 +35,12 @@ const MemorialSchema = new mongoose.Schema(
     death: {
       type: Date,
     },
+    condolences: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "condolences",
+      },
+    ],
   },
   {
     timestamps: true,

@@ -11,9 +11,10 @@ export default class MemorialController {
     next: NextFunction
   ) => {
     try {
+      const userId = req.user.id;
       const model: MemorialDto = req.body;
       model.picture = `/uploads/${req.file?.originalname}`;
-      const memorial = await this.memorialService.createMemorial(model);
+      const memorial = await this.memorialService.createMemorial(userId, model);
       res.status(200).json(memorial);
     } catch (error) {
       next(error);
@@ -26,10 +27,12 @@ export default class MemorialController {
     next: NextFunction
   ) => {
     try {
+      const userId = req.user.id;
       const model: MemorialDto = req.body;
       model.picture = `/uploads/${req.file?.originalname}`;
       const memorial = await this.memorialService.updateMemorial(
         req.params.id,
+        userId,
         model
       );
       res.status(200).json(memorial);
@@ -44,7 +47,11 @@ export default class MemorialController {
     next: NextFunction
   ) => {
     try {
-      const result = await this.memorialService.deleteMemorial(req.params.id);
+      const userId = req.user.id;
+      const result = await this.memorialService.deleteMemorial(
+        req.params.id,
+        userId
+      );
       res.status(200).json(result);
     } catch (error) {
       next(error);

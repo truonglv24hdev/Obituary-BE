@@ -11,8 +11,9 @@ export default class RSVPController {
     next: NextFunction
   ) => {
     try {
+      const userId = req.user.id;
       const model: RSVPDto = req.body;
-      const rsvp = await this.rsvpService.createRSVP(model);
+      const rsvp = await this.rsvpService.createRSVP(userId, model);
       res.status(200).json(rsvp);
     } catch (error) {
       next(error);
@@ -26,15 +27,24 @@ export default class RSVPController {
   ) => {
     try {
       // Gán model sau khi req.body đã đầy đủ
+      const userId = req.user.id;
       const model: RSVPDto = req.body;
-      const user = await this.rsvpService.updateRSVPById(req.params.id, model);
+      const user = await this.rsvpService.updateRSVPById(
+        req.params.id,
+        userId,
+        model
+      );
       res.status(200).json(user);
     } catch (error) {
       next(error);
     }
   };
 
-  public getRSVPById = async (req: Request, res: Response, next: NextFunction) => {
+  public getRSVPById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const users = await this.rsvpService.getRSVPById(req.params.id);
       res.status(200).json(users);
@@ -49,7 +59,8 @@ export default class RSVPController {
     next: NextFunction
   ) => {
     try {
-      const result = await this.rsvpService.deleteRSVPById(req.params.id);
+      const userId = req.user.id;
+      const result = await this.rsvpService.deleteRSVPById(req.params.id,userId);
       res.status(200).json(result);
     } catch (error) {
       next(error);

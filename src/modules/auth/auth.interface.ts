@@ -1,8 +1,8 @@
-export interface DataStoreInToken{
-  id: string
+export interface DataStoreInToken {
+  id: string;
+  role: string;
 }
 
-export interface TokenData{
-  token: string
+export interface TokenData {
+  token: string;
 }
-

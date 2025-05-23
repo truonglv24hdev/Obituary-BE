@@ -7,12 +7,15 @@ import IObituary from "./obituary.interface";
 class ObituaryService {
   public obituarySchema = obituaryModel;
 
-  public async createObituary(model: ObituaryDto): Promise<IObituary> {
+  public async createObituary(
+    userId: string,
+    model: ObituaryDto
+  ): Promise<IObituary> {
     if (isEmptyObject(model)) {
       throw new HttpException(400, "Model is empty");
     }
 
-    const rsvp = await this.obituarySchema.create(model);
+    const rsvp = await this.obituarySchema.create({ user: userId, ...model });
     if (!rsvp) {
       throw new HttpException(400, "Obituary id not can create");
     }
@@ -22,14 +25,15 @@ class ObituaryService {
 
   public async updateObituaryById(
     obituaryId: string,
+    userId: string,
     model: ObituaryDto
   ): Promise<IObituary> {
     if (isEmptyObject(model)) {
       throw new HttpException(400, "Model is empty");
     }
 
-    const obituaryUpdate = await this.obituarySchema.findByIdAndUpdate(
-      obituaryId,
+    const obituaryUpdate = await this.obituarySchema.findOneAndUpdate(
+      { user: userId, _id: obituaryId },
       model,
       { new: true }
     );

@@ -26,29 +26,28 @@ const dynamicStorage = multer.diskStorage({
   },
 });
 
-const uploadMixed = multer({
-  storage: dynamicStorage,
-  fileFilter: function (
-    req: Request,
-    file: Express.Multer.File,
-    cb: FileFilterCallback
-  ) {
-    const allowed = [
-      "video/mp4",
-      "video/mkv",
-      "video/webm",
-      "image/jpeg",
-      "image/png",
-    ];
-    if (allowed.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error("File type not allowed"));
-    }
-  },
-}).fields([
-  { name: "gallery", maxCount: 10 },
-  { name: "video", maxCount: 5 },
-]);
+const allowed = [
+  "video/mp4",
+  "video/mkv",
+  "video/webm",
+  "image/jpeg",
+  "image/png",
+];
 
+export function uploadMixed(fields: { name: string; maxCount: number }[]) {
+  return multer({
+    storage: dynamicStorage,
+    fileFilter: function (
+      req: Request,
+      file: Express.Multer.File,
+      cb: FileFilterCallback
+    ) {
+      if (allowed.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error("File type not allowed"));
+      }
+    },
+  }).fields(fields);
+}
 export default uploadMixed;

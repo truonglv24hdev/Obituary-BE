@@ -7,6 +7,7 @@ import UserRoute from "./modules/user/user.route";
 import MemorialRoute from "./modules/memorial/memorial.route";
 import RSVPRoute from "./modules/rsvp/rsvp.route";
 import ObituaryRoute from "./modules/obituary/obituary.route";
+import CondolencesRoute from "./modules/condolences/condolences.route";
 import passport from "./config/passport";
 import authRoutes from "./routes/auth.routes";
 
@@ -17,6 +18,7 @@ const routes = [
   new MemorialRoute(),
   new RSVPRoute(),
   new ObituaryRoute(),
+  new CondolencesRoute()
 ];
 const app = new App(routes);
 

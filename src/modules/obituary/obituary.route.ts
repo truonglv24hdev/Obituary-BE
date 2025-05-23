@@ -83,8 +83,11 @@ export default class ObituaryRoute implements Route {
     this.router.post(
       this.path,
       authMiddleware,
-      uploadMixed,
-      validatorMiddleware(ObituaryDto, true),
+      uploadMixed([
+        { name: "photo", maxCount: 5 },
+        { name: "video", maxCount: 5 },
+      ]),
+      // validatorMiddleware(ObituaryDto, true),
       this.ObituaryController.createObituary
     );
 
@@ -157,7 +160,10 @@ export default class ObituaryRoute implements Route {
     this.router.put(
       this.path + "/:id",
       authMiddleware,
-      uploadMixed,
+      uploadMixed([
+        { name: "photo", maxCount: 5 },
+        { name: "video", maxCount: 5 },
+      ]),
       validatorMiddleware(ObituaryDto, true),
       this.ObituaryController.updateObituaryById
     );
