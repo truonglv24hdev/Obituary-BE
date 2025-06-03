@@ -8,7 +8,8 @@ export default interface IMemorial {
   middle_name: string;
   last_name: string;
   gender: EGender;
-  born: Date;
-  death: Date;
+  born: string;
+  death: string;
+  slug: string;
   condolences: string[];
 }

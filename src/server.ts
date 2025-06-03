@@ -22,10 +22,10 @@ const routes = [
 ];
 const app = new App(routes);
 
-// // Initialize Passport
-// app.app.use(passport.initialize());
+// Initialize Passport
+app.app.use(passport.initialize());
 
-// // Add OAuth routes
-// app.app.use('/api/auth', authRoutes);
+// Add OAuth routes
+app.app.use('/api/auth', authRoutes);
 
 app.listen();

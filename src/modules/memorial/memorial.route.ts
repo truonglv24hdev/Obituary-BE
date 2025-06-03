@@ -1,11 +1,11 @@
 import Route from "../../core/interface/routes.interface";
 import { Router } from "express";
 import MemorialController from "./memorial.controller";
-import validatorMiddleware from "../../core/middleware/validation.middleware";
 import multer from "multer";
 import { storage } from "../../core/utils/storage";
 import MemorialDto from "./memorial.dto";
 import authMiddleware from "../../core/middleware/auth.middleware";
+import { createMemorial } from "../../core/validators/memorial.validator";
 
 const upload = multer({
   storage: storage,
@@ -65,7 +65,7 @@ export default class MemorialRoute implements Route {
       this.path,
       authMiddleware,
       upload.single("picture"),
-      validatorMiddleware(MemorialDto, true),
+      createMemorial,
       this.memorialController.createMemorial
     );
 
@@ -117,7 +117,6 @@ export default class MemorialRoute implements Route {
       this.path + "/:id",
       authMiddleware,
       upload.single("picture"),
-      validatorMiddleware(MemorialDto, true),
       this.memorialController.updateMemorialById
     );
 
@@ -164,6 +163,12 @@ export default class MemorialRoute implements Route {
     this.router.get(
       this.path + "/:id",
       this.memorialController.getMemorialById
+    );
+
+    this.router.get(
+      this.path,
+      authMiddleware,
+      this.memorialController.getMemorialByUser
     );
 
     /**

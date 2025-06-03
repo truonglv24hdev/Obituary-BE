@@ -22,11 +22,12 @@ export default class MemorialDto {
   @IsNotEmpty()
   public gender: string | undefined;
 
-  @IsNotEmpty()
-  @IsDate()  
+  @IsNotEmpty()  
   public born: Date | undefined;
 
   @IsNotEmpty()
-  @IsDate()
   public death: Date | undefined;
+
+  @IsNotEmpty()
+  public slug: string | undefined;
 }

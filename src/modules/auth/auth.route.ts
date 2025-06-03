@@ -1,8 +1,7 @@
 import Route from "../../core/interface/routes.interface";
 import { Router } from "express";
 import AuthController from "./auth.controller";
-import validatorMiddleware from "../../core/middleware/validation.middleware";
-import { SignInDto, SignUpDto } from "./auth.dto";
+import { signIn,signUp } from "../../core/validators/auth.validator";
 
 export default class AuthRoute implements Route {
   public path = "/api";
@@ -43,7 +42,7 @@ export default class AuthRoute implements Route {
      */
     this.router.post(
       this.path + "/sign-up",
-      validatorMiddleware(SignUpDto, true),
+      signUp,
       this.authController.signUp
     );
 
@@ -73,7 +72,7 @@ export default class AuthRoute implements Route {
      */
     this.router.post(
       this.path + "/sign-in",
-      validatorMiddleware(SignInDto, true),
+      signIn,
       this.authController.signIn
     );
   }

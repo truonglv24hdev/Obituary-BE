@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEmail, MinLength } from "class-validator";
+import { IsNotEmpty, IsEmail, MinLength, MaxLength } from "class-validator";
 
 export class SignUpDto {
   @IsNotEmpty()
@@ -9,7 +9,8 @@ export class SignUpDto {
   public email: string | undefined;
 
   @IsNotEmpty()
-  @MinLength(8, { message: "Password is too short" })
+  @MinLength(6, { message: "Password is too short" })
+  @MaxLength(20,{ message: "Password is too long" })
   public password: string | undefined;
 }
 
@@ -19,6 +20,7 @@ export class SignInDto {
   public email: string | undefined;
 
   @IsNotEmpty()
-  @MinLength(8, { message: "password is too short" })
+  @MinLength(6, { message: "Password is too short" })
+  @MaxLength(20,{ message: "Password is too long" })
   public password: string | undefined;
 }

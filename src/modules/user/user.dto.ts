@@ -12,13 +12,16 @@ export default class UserInfoDto {
   public first_name: string | undefined;
 
   @IsNotEmpty()
+  @IsOptional()
   public last_name: string | undefined;
 
   @IsNotEmpty()
   @IsEmail()
+  @IsOptional()
   public email: string | undefined;
 
   @IsNotEmpty()
+  @IsOptional()
   @MinLength(6, { message: "Password is too short" })
   public password: string | undefined;
 

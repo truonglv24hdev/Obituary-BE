@@ -1,9 +1,9 @@
 import Route from "../../core/interface/routes.interface";
 import { Router } from "express";
 import RSVPController from "./rsvp.controller";
-import validatorMiddleware from "../../core/middleware/validation.middleware";
 import RSVPDto from "./rsvp.dto";
 import authMiddleware from "../../core/middleware/auth.middleware";
+import { createRSVP, updateRSVP } from "../../core/validators/rsvp.validator";
 export default class RSVPRoute implements Route {
   public path = "/api/rsvp";
   public router = Router();
@@ -54,7 +54,7 @@ export default class RSVPRoute implements Route {
     this.router.post(
       this.path,
       authMiddleware,
-      validatorMiddleware(RSVPDto, true),
+      createRSVP,
       this.rsvpController.createRSVP
     );
 
@@ -102,7 +102,7 @@ export default class RSVPRoute implements Route {
     this.router.put(
       this.path + "/:id",
       authMiddleware,
-      validatorMiddleware(RSVPDto, true),
+      updateRSVP,
       this.rsvpController.updateRSVPById
     );
 

@@ -1,12 +1,12 @@
 import Route from "../../core/interface/routes.interface";
 import { Router } from "express";
-import validatorMiddleware from "../../core/middleware/validation.middleware";
 import ObituaryDto from "./obituary.dto";
 import ObituaryController from "./obituary.controller";
 import multer from "multer";
 import { storageVideo, storage } from "../../core/utils/storage";
 import uploadMixed from "../../core/middleware/uploadMixed ";
 import authMiddleware from "../../core/middleware/auth.middleware";
+import { createObituary } from "../../core/validators/obituary.validator";
 
 export default class ObituaryRoute implements Route {
   public path = "/api/obituary";
@@ -87,7 +87,7 @@ export default class ObituaryRoute implements Route {
         { name: "photo", maxCount: 5 },
         { name: "video", maxCount: 5 },
       ]),
-      // validatorMiddleware(ObituaryDto, true),
+      createObituary,
       this.ObituaryController.createObituary
     );
 
@@ -164,7 +164,7 @@ export default class ObituaryRoute implements Route {
         { name: "photo", maxCount: 5 },
         { name: "video", maxCount: 5 },
       ]),
-      validatorMiddleware(ObituaryDto, true),
+      createObituary,
       this.ObituaryController.updateObituaryById
     );
 

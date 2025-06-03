@@ -6,10 +6,12 @@ import IMemorial from "./memorial.interface";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import condolencesModel from "../condolences/condolences.model";
+import UserSchema from "../user/user.model";
 dayjs.extend(customParseFormat);
 
 class MemorialService {
   public memorialSchema = MemorialSchema;
+  public userSchema = UserSchema;
 
   public async createMemorial(
     userId: string,
@@ -23,6 +25,15 @@ class MemorialService {
       user: userId,
       ...model,
     });
+
+    await this.userSchema.findByIdAndUpdate(
+      userId,
+      {
+        $push: { memorials: memorial._id },
+      },
+      { new: true }
+    );
+
     if (!memorial) {
       throw new HttpException(400, "Memorial id not can create");
     }
@@ -61,6 +72,17 @@ class MemorialService {
   public async getMemorialById(memorialId: string): Promise<IMemorial> {
     const memorial = await this.memorialSchema
       .findById(memorialId)
+      .populate({ path: "condolences", model: condolencesModel });
+    if (!memorial) {
+      throw new HttpException(404, "memorial is not found");
+    }
+
+    return memorial;
+  }
+
+  public async getMemorialByUser(userId: string): Promise<IMemorial[]> {
+    const memorial = await this.memorialSchema
+      .find({ user: userId })
       .populate({ path: "condolences", model: condolencesModel });
     if (!memorial) {
       throw new HttpException(404, "memorial is not found");

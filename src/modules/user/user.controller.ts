@@ -16,8 +16,9 @@ export default class UsersController {
     res: Response,
     next: NextFunction
   ) => {
+    const userId = req.user.id
     try {
-      const user = await this.userService.getUserById(req.params.id);
+      const user = await this.userService.getUserById(userId);
       res.status(200).json(user);
     } catch (error) {
       next(error);
@@ -34,7 +35,7 @@ export default class UsersController {
       model.memorials = (req.files as Express.Multer.File[])?.map(
         (file) => `/uploads/${file.filename}`
       );
-      const user = await this.userService.updateUserById(req.params.id, model);
+      const user = await this.userService.updateUserById(req.user.id, model);
       res.status(200).json(user);
     } catch (error) {
       next(error);

@@ -30,10 +30,15 @@ const MemorialSchema = new mongoose.Schema(
       default: EGender.MALE,
     },
     born: {
-      type: Date,
+      type: String,
     },
     death: {
-      type: Date,
+      type: String,
+    },
+    slug: {
+      type: String,
+      require: true,
+      unique: true,
     },
     condolences: [
       {

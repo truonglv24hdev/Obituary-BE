@@ -17,12 +17,12 @@ class AuthService {
 
     const user = await this.userSchema.findOne({ email: model.email });
     if (!user) {
-      throw new HttpException(409, "Your email is not exist");
+      throw new HttpException(400, "Your email is not exist");
     }
 
     const checkPassword = await bcrypt.compare(model.password!, user.password);
     if (!checkPassword) {
-      throw new HttpException(401, "Incorrect password");
+      throw new HttpException(400, "Incorrect password");
     }
 
     return this.createToken(user);
@@ -35,7 +35,7 @@ class AuthService {
 
     const user = await this.userSchema.findOne({ email: model.email });
     if (user) {
-      throw new HttpException(409, "Your email already exist");
+      throw new HttpException(400, "Your email already exist");
     }
 
     const slat = bcrypt.genSaltSync(10);
@@ -52,7 +52,7 @@ class AuthService {
 
   private createToken(user: IUser): TokenData {
     const dataInToken: DataStoreInToken = { id: user._id, role: user.role };
-    const secret: string = process.env.JWT_TOKEN_SECRET!;
+    const secret: string = process.env.JWT_TOKEN_SECRET! || "secret";
     const expiresIn: number = 3600;
     return {
       token: jwt.sign(dataInToken, secret, { expiresIn }),

@@ -1,7 +1,6 @@
 import Route from "../../core/interface/routes.interface";
 import { Router } from "express";
 import UsersController from "./user.controller";
-import validatorMiddleware from "../../core/middleware/validation.middleware";
 import UserInfoDto from "./user.dto";
 import multer from "multer";
 import { storage } from "../../core/utils/storage";
@@ -9,6 +8,7 @@ const upload = multer({
   storage: storage,
 });
 import authMiddleware from "../../core/middleware/auth.middleware";
+import { updateUser } from "../../core/validators/user.validator";
 export default class UserRoute implements Route {
   public path = "/api/user";
   public router = Router();
@@ -64,9 +64,9 @@ export default class UserRoute implements Route {
      *        description: Not Found
      */
     this.router.put(
-      this.path + "/:id",
+      this.path,
       authMiddleware,
-      upload.array("memorials"),
+      updateUser,
       this.userController.updateUserById
     );
 
@@ -154,7 +154,7 @@ export default class UserRoute implements Route {
      *         description: Bad request
      */
     this.router.get(
-      this.path + "/:id",
+      this.path + "/profile",
       authMiddleware,
       this.userController.getUserById
     );

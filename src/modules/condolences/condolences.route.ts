@@ -1,10 +1,10 @@
 import Route from "../../core/interface/routes.interface";
 import { Router } from "express";
 import CondolencesController from "./condolences.controller";
-import validatorMiddleware from "../../core/middleware/validation.middleware";
 import CondolencesDto from "./condolences.dto";
 import authMiddleware from "../../core/middleware/auth.middleware";
 import uploadMixed from "../../core/middleware/uploadMixed ";
+import { createCondolences } from "../../core/validators/condolences.validater";
 
 export default class CondolencesRoute implements Route {
   public path = "/api/condolences";
@@ -61,7 +61,7 @@ export default class CondolencesRoute implements Route {
         { name: "photo", maxCount: 1 },
         { name: "video", maxCount: 1 },
       ]),
-      validatorMiddleware(CondolencesDto, true),
+      createCondolences,
       this.condolencesController.createCondolences
     );
 
