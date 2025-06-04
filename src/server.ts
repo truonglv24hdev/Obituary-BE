@@ -10,6 +10,7 @@ import ObituaryRoute from "./modules/obituary/obituary.route";
 import CondolencesRoute from "./modules/condolences/condolences.route";
 import passport from "./config/passport";
 import authRoutes from "./routes/auth.routes";
+import PaymentRoute from "./routes/payment";
 
 dotenv.config();
 const routes = [
@@ -18,7 +19,8 @@ const routes = [
   new MemorialRoute(),
   new RSVPRoute(),
   new ObituaryRoute(),
-  new CondolencesRoute()
+  new CondolencesRoute(),
+  new PaymentRoute()
 ];
 const app = new App(routes);
 
@@ -26,6 +28,6 @@ const app = new App(routes);
 app.app.use(passport.initialize());
 
 // Add OAuth routes
-app.app.use('/api/auth', authRoutes);
+app.app.use("/api/auth", authRoutes);
 
 app.listen();

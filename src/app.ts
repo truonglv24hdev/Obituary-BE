@@ -8,8 +8,6 @@ import helmet from "helmet";
 import Logger from "./core/utils/Logger";
 import swaggerDocs from './swagger'
 import * as path from 'path';
-import paymentRoutes from './routes/payment';
-
 
 class App {
   public app: express.Application;
@@ -32,7 +30,6 @@ class App {
     this.connectDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
-    this.app.use('/api/payment', paymentRoutes);
   }
 
   public listen() {
