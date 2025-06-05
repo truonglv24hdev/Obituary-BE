@@ -33,9 +33,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       require: false,
     },
-    memorials:{
+    memorials: {
       type: [String],
-      require:false
+      require: false,
     },
     googleId: {
       type: String,
@@ -47,11 +47,15 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
     },
-    role:{
+    role: {
       type: String,
       enum: Object.values(ERole),
       default: ERole.USER,
-    }
+    },
+    premium: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

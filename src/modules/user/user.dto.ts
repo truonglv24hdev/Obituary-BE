@@ -4,7 +4,8 @@ import {
   MinLength,
   IsOptional,
   IsArray,
-  IsString
+  IsString,
+  IsBoolean
 } from "class-validator";
 
 export default class UserInfoDto {
@@ -42,4 +43,8 @@ export default class UserInfoDto {
   @IsOptional()
   @IsNotEmpty()
   public country: string | undefined;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  public premium: boolean | undefined;
 }

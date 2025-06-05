@@ -12,4 +12,5 @@ export default interface IUser {
   googleId: string;
   facebookId: string;
   role: ERole
+  premium: false
 }
