@@ -3,6 +3,7 @@ import ObituaryDto from "./obituary.dto";
 import { isEmptyObject } from "../../core/utils/helper";
 import HttpException from "../../core/middleware/httpException";
 import IObituary from "./obituary.interface";
+import memorialModel from "../memorial/memorial.model";
 
 class ObituaryService {
   public obituarySchema = obituaryModel;
@@ -15,12 +16,15 @@ class ObituaryService {
       throw new HttpException(400, "Model is empty");
     }
 
-    const rsvp = await this.obituarySchema.create({ user: userId, ...model });
-    if (!rsvp) {
+    const obituary = await this.obituarySchema.create({
+      user: userId,
+      ...model,
+    });
+    if (!obituary) {
       throw new HttpException(400, "Obituary id not can create");
     }
 
-    return rsvp;
+    return obituary;
   }
 
   public async updateObituaryById(
@@ -45,7 +49,9 @@ class ObituaryService {
   }
 
   public async getObituaryById(obituaryId: string): Promise<IObituary> {
-    const Obituary = await this.obituarySchema.findById(obituaryId);
+    const Obituary = await this.obituarySchema
+      .findOne({ memorial: obituaryId })
+      .populate({ path: "memorial", model: memorialModel });
     if (!Obituary) {
       throw new HttpException(404, "Obituary not found");
     }

@@ -5,25 +5,15 @@ const RSVPSchema = new mongoose.Schema(
   {
     first_name: {
       type: String,
-      require: true,
+      required: true,
     },
     last_name: {
       type: String,
-      require: true,
+      required: true,
     },
     user: {
       type: Schema.Types.ObjectId,
       ref: "users",
-    },
-    location: {
-      type: String,
-      require: true,
-    },
-    date: {
-      type: Date,
-    },
-    time:{
-      type: String
     },
     verification: {
       type: Boolean,
@@ -35,7 +25,17 @@ const RSVPSchema = new mongoose.Schema(
     contact: {
       type: String,
     },
-    
+    wakeServiceRSVP: {
+      type: Object,
+    },
+    cortegeDepartureRSVP: {
+      type: Boolean,
+      default: null,
+    },
+    cremationRSVP: {
+      type: Boolean,
+      default: null,
+    },
   },
   {
     timestamps: true,

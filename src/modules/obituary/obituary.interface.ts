@@ -1,3 +1,4 @@
+import IMemorial from "../memorial/memorial.interface";
 import IUser from "../user/user.interface";
 
 export interface IFamilyMember {
@@ -13,16 +14,41 @@ export interface ITimeLine {
   date: string;
 }
 
+export interface IWakeDetails {
+  description: string;
+  location: string;
+  date: Date;
+  timeFrom: string;
+  timeTo: string;
+}
+
+export interface ICortegeDeparture {
+  description: string;
+  location: string;
+  date: Date;
+  time: string;
+}
+
+export interface ICremation {
+  description: string;
+  location: string;
+  date: Date;
+  time: string;
+}
+
 export default interface IObituary {
   _id: string;
   user: IUser;
+  memorial: IMemorial
   quote: string;
   wordsFromFamily: string;
   lifeStory: string;
   familyTree: IFamilyTree;
   favorites: string[];
   timeline: ITimeLine[];
-  quoteEvent: string;
+  wakeDetails: IWakeDetails;
+  cortegeDeparture: ICortegeDeparture;
+  cremation: ICremation;
   gallery: string[];
   video: string[];
 }

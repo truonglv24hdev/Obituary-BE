@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsArray,
   IsString,
+  IsBoolean,
 } from "class-validator";
 
 export default class MemorialDto {
@@ -22,7 +23,7 @@ export default class MemorialDto {
   @IsNotEmpty()
   public gender: string | undefined;
 
-  @IsNotEmpty()  
+  @IsNotEmpty()
   public born: Date | undefined;
 
   @IsNotEmpty()
@@ -30,4 +31,8 @@ export default class MemorialDto {
 
   @IsNotEmpty()
   public slug: string | undefined;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  public premium: boolean | undefined;
 }

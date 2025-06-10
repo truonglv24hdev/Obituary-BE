@@ -13,15 +13,15 @@ const CondolencesSchema = new mongoose.Schema(
     },
     full_name: {
       type: String,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
     },
     message: {
       type: String,
-      require: true,
+      required: true,
     },
     photo: [String],
     video: [String],

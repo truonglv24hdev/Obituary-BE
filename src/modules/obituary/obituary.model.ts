@@ -23,6 +23,10 @@ const ObituarySchema = new Schema<IObituary>(
       type: Schema.Types.ObjectId,
       ref: "users",
     },
+    memorial: {
+      type: Schema.Types.ObjectId,
+      ref: "memorials",
+    },
     quote: {
       type: String,
     },
@@ -32,14 +36,20 @@ const ObituarySchema = new Schema<IObituary>(
     lifeStory: {
       type: String,
     },
+    wakeDetails: {
+      type: Object,
+    },
+    cortegeDeparture: {
+      type: Object,
+    },
+    cremation: {
+      type: Object,
+    },
     familyTree: FamilyTreeSchema,
     favorites: [String],
     timeline: {
       type: [TimeLineSchema],
       default: [],
-    },
-    quoteEvent: {
-      type: String,
     },
     gallery: [{ type: String }],
     video: [{ type: String }],

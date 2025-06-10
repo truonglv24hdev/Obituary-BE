@@ -35,6 +35,32 @@ const createRSVP = validateRequest(
       .isString()
       .isLength({ min: 10, max: 100 })
       .withMessage("Contact must be between 5 and 100 characters"),
+
+    body("wakeServiceRSVP").isObject().optional(),
+
+    body("wakeServiceRSVP.date")
+      .isString()
+      .withMessage("date must be a boolean"),
+
+    body("wakeServiceRSVP.time")
+      .isString()
+      .isLength({ max: 300 })
+      .withMessage("Message must be under 300 characters"),
+
+    body("wakeServiceRSVP.attending")
+      .isBoolean()
+      .isLength({ max: 300 })
+      .withMessage("Message must be under 300 characters"),
+
+    body("cortegeDepartureRSVP")
+      .optional()
+      .isBoolean()
+      .withMessage("cortegeDepartureRSVP must be true or false"),
+
+    body("cremationRSVP")
+      .optional()
+      .isBoolean()
+      .withMessage("cremationRSVP must be true or false"),
   ],
   false
 );

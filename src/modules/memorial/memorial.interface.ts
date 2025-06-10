@@ -12,4 +12,5 @@ export default interface IMemorial {
   death: string;
   slug: string;
   condolences: string[];
+  premium: false
 }

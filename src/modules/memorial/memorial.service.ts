@@ -7,11 +7,13 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import condolencesModel from "../condolences/condolences.model";
 import UserSchema from "../user/user.model";
+import obituaryModel from "../obituary/obituary.model";
 dayjs.extend(customParseFormat);
 
 class MemorialService {
   public memorialSchema = MemorialSchema;
   public userSchema = UserSchema;
+  public obituarySchema = obituaryModel;
 
   public async createMemorial(
     userId: string,
@@ -24,6 +26,11 @@ class MemorialService {
     const memorial = await this.memorialSchema.create({
       user: userId,
       ...model,
+    });
+
+    const obituary = await this.obituarySchema.create({
+      memorial: memorial._id,
+      user: userId,
     });
 
     await this.userSchema.findByIdAndUpdate(

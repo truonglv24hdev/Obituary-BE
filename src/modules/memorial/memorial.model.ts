@@ -10,19 +10,19 @@ const MemorialSchema = new mongoose.Schema(
     },
     picture: {
       type: String,
-      require: false,
+      required: false,
     },
     first_name: {
       type: String,
-      require: true,
+      required: true,
     },
     middle_name: {
       type: String,
-      require: true,
+      required: true,
     },
     last_name: {
       type: String,
-      require: true,
+      required: true,
     },
     gender: {
       type: String,
@@ -37,7 +37,7 @@ const MemorialSchema = new mongoose.Schema(
     },
     slug: {
       type: String,
-      require: true,
+      required: true,
       unique: true,
     },
     condolences: [
@@ -46,6 +46,10 @@ const MemorialSchema = new mongoose.Schema(
         ref: "condolences",
       },
     ],
+    premium:{
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true,
