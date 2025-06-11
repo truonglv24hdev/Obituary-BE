@@ -37,6 +37,9 @@ export class EventDto {
 
 export default class ObituaryDto {
   @IsOptional()
+  public headerImage: string | undefined;
+
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   public quote: string | undefined;

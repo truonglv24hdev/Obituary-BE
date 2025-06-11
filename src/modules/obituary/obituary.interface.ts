@@ -40,6 +40,7 @@ export default interface IObituary {
   _id: string;
   user: IUser;
   memorial: IMemorial
+  headerImage: string;
   quote: string;
   wordsFromFamily: string;
   lifeStory: string;

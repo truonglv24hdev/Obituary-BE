@@ -61,6 +61,7 @@ export default class ObituaryController {
           ),
           video: (files.video ?? []).map((file) => `/uploads/${file.filename}`),
         };
+        model.headerImage = `/uploads/${req.file?.filename}`;
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,
           userId,
@@ -69,6 +70,7 @@ export default class ObituaryController {
         res.status(200).json(obituary);
       } else {
         const model: ObituaryDto = req.body;
+        model.headerImage = `/uploads/${req.file?.filename}`;
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,
           userId,

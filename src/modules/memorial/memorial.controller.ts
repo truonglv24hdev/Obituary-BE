@@ -29,7 +29,9 @@ export default class MemorialController {
     try {
       const userId = req.user.id;
       const model: MemorialDto = req.body;
-      model.picture = `/uploads/${req.file?.originalname}`;
+      if (req.file) {
+        model.picture = `/uploads/${req.file?.filename}`;
+      }
       const memorial = await this.memorialService.updateMemorial(
         req.params.id,
         userId,

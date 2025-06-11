@@ -27,6 +27,10 @@ const ObituarySchema = new Schema<IObituary>(
       type: Schema.Types.ObjectId,
       ref: "memorials",
     },
+    headerImage: {
+      type: String,
+      required: false,
+    },
     quote: {
       type: String,
     },

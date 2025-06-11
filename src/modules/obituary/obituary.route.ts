@@ -7,6 +7,9 @@ import { storageVideo, storage } from "../../core/utils/storage";
 import uploadMixed from "../../core/middleware/uploadMixed ";
 import authMiddleware from "../../core/middleware/auth.middleware";
 import { createObituary } from "../../core/validators/obituary.validator";
+const upload = multer({
+  storage: storage,
+});
 
 export default class ObituaryRoute implements Route {
   public path = "/api/obituary";
@@ -160,6 +163,7 @@ export default class ObituaryRoute implements Route {
     this.router.put(
       this.path + "/:id",
       authMiddleware,
+      upload.single("headerImage"),
       uploadMixed([
         { name: "photo", maxCount: 5 },
         { name: "video", maxCount: 5 },

@@ -37,7 +37,7 @@ class ObituaryService {
     }
 
     const obituaryUpdate = await this.obituarySchema.findOneAndUpdate(
-      { user: userId, _id: obituaryId },
+      { user: userId, memorial: obituaryId },
       model,
       { new: true }
     );
