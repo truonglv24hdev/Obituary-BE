@@ -49,19 +49,28 @@ export default class ObituaryController {
   ) => {
     try {
       const userId = req.user.id;
+
       if (req.files) {
         const files = req.files as {
-          gallery?: Express.Multer.File[];
+          photo?: Express.Multer.File[];
           video?: Express.Multer.File[];
+          headerImage?: Express.Multer.File[];
         };
+
         const model: ObituaryDto = {
           ...req.body,
-          gallery: (files.gallery ?? []).map(
+          gallery: (files.photo ?? []).map(
             (file) => `/uploads/${file.filename}`
           ),
           video: (files.video ?? []).map((file) => `/uploads/${file.filename}`),
+          headerImage: files.headerImage?.[0]
+            ? `/uploads/${files.headerImage[0].filename}`
+            : undefined,
+          familyTree: req.body.familyTree
+            ? JSON.parse(req.body.familyTree)
+            : [],
         };
-        model.headerImage = `/uploads/${req.file?.filename}`;
+
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,
           userId,
@@ -69,8 +78,9 @@ export default class ObituaryController {
         );
         res.status(200).json(obituary);
       } else {
-        const model: ObituaryDto = req.body;
-        model.headerImage = `/uploads/${req.file?.filename}`;
+        const model: ObituaryDto = {
+          ...req.body,
+        };
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,
           userId,

@@ -1,12 +1,14 @@
 import IMemorial from "../memorial/memorial.interface";
 import IUser from "../user/user.interface";
 
-export interface IFamilyMember {
+export interface IFamilyTree {
   _id: string;
-  name: string;
+  category: string;
+  members: [{
+    name:string,
+    image: string
+  }]
 }
-
-export type IFamilyTree = Record<string, IFamilyMember[]>;
 
 export interface ITimeLine {
   title: string;
@@ -44,7 +46,7 @@ export default interface IObituary {
   quote: string;
   wordsFromFamily: string;
   lifeStory: string;
-  familyTree: IFamilyTree;
+  familyTree: IFamilyTree[];
   favorites: string[];
   timeline: ITimeLine[];
   wakeDetails: IWakeDetails;

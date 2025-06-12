@@ -1,20 +1,23 @@
 import mongoose, { Schema } from "mongoose";
 import IObituary from "./obituary.interface";
 
-const FamilyMemberSchema = new Schema({
-  name: { type: String, required: true },
-});
-
-const FamilyTreeSchema = {
-  type: Map,
-  of: [FamilyMemberSchema],
-  default: {},
-};
-
 const TimeLineSchema = new Schema({
   title: String,
   description: String,
   date: Date,
+});
+
+const FamilyMemberSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    avatar: { type: String, required: true },
+  },
+  { _id: false }
+);
+
+const FamilyTreeSchema = new Schema({
+  category: { type: String, required: true },
+  members: { type: [FamilyMemberSchema], default: [] },
 });
 
 const ObituarySchema = new Schema<IObituary>(
@@ -49,7 +52,7 @@ const ObituarySchema = new Schema<IObituary>(
     cremation: {
       type: Object,
     },
-    familyTree: FamilyTreeSchema,
+    familyTree: { type: [FamilyTreeSchema], default: [] },
     favorites: [String],
     timeline: {
       type: [TimeLineSchema],

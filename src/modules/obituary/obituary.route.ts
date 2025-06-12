@@ -163,12 +163,14 @@ export default class ObituaryRoute implements Route {
     this.router.put(
       this.path + "/:id",
       authMiddleware,
-      upload.single("headerImage"),
       uploadMixed([
+        { name: "headerImage", maxCount: 1 },
         { name: "photo", maxCount: 5 },
         { name: "video", maxCount: 5 },
+        { name: "image", maxCount: 5 }
+        ,
       ]),
-      createObituary,
+      // createObituary,
       this.ObituaryController.updateObituaryById
     );
 

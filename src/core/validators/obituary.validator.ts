@@ -20,7 +20,7 @@ const createObituary = validateRequest(
       .isLength({ min: 5 })
       .withMessage("Life story must be between 5 and 100 characters"),
 
-    body("familyTree").isObject().optional(),
+    body("familyTree").isArray().optional(),
 
     body("favorites").isArray().optional(),
 
