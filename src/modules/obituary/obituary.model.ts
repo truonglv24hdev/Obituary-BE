@@ -5,6 +5,7 @@ const TimeLineSchema = new Schema({
   title: String,
   description: String,
   date: Date,
+  location: String,
 });
 
 const FamilyMemberSchema = new Schema(
@@ -54,7 +55,7 @@ const ObituarySchema = new Schema<IObituary>(
     },
     familyTree: { type: [FamilyTreeSchema], default: [] },
     favorites: [String],
-    timeline: {
+    timeLine: {
       type: [TimeLineSchema],
       default: [],
     },

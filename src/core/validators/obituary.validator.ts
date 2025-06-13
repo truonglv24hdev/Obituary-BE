@@ -24,7 +24,7 @@ const createObituary = validateRequest(
 
     body("favorites").isArray().optional(),
 
-    body("timeline").isArray().optional(),
+    body("timeLine").isArray().optional(),
 
     body("wakeDetails").isObject().optional(),
     body("wakeDetails.description").isString().isLength({ min: 5 }).optional(),

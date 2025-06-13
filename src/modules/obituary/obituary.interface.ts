@@ -14,6 +14,7 @@ export interface ITimeLine {
   title: string;
   description: string;
   date: string;
+  location: string
 }
 
 export interface IWakeDetails {
@@ -48,7 +49,7 @@ export default interface IObituary {
   lifeStory: string;
   familyTree: IFamilyTree[];
   favorites: string[];
-  timeline: ITimeLine[];
+  timeLine: ITimeLine[];
   wakeDetails: IWakeDetails;
   cortegeDeparture: ICortegeDeparture;
   cremation: ICremation;

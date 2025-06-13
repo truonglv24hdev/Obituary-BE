@@ -69,7 +69,7 @@ export default class ObituaryDto {
   @IsNotEmpty()
   @IsArray()
   @ValidateNested({ each: true })
-  public timeline: ITimeLine[] | undefined;
+  public timeLine: ITimeLine[] | undefined;
 
   @IsOptional()
   @ValidateNested()

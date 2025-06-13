@@ -69,6 +69,9 @@ export default class ObituaryController {
           familyTree: req.body.familyTree
             ? JSON.parse(req.body.familyTree)
             : [],
+          timeLine: req.body.timeLine
+            ? JSON.parse(req.body.timeLine)
+            : [],
         };
 
         const obituary = await this.ObituaryService.updateObituaryById(
@@ -80,6 +83,12 @@ export default class ObituaryController {
       } else {
         const model: ObituaryDto = {
           ...req.body,
+          familyTree: req.body.familyTree
+            ? JSON.parse(req.body.familyTree)
+            : [],
+          timeLine: req.body.timeLine
+            ? JSON.parse(req.body.timeLine)
+            : [],
         };
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,
