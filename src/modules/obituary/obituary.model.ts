@@ -8,6 +8,15 @@ const TimeLineSchema = new Schema({
   location: String,
 });
 
+const EventSchema = new Schema({
+  eventTitle: String,
+  description: String,
+  location: String,
+  date: [],
+  timeFrom: [],
+  timeTo: [],
+});
+
 const FamilyMemberSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -44,14 +53,9 @@ const ObituarySchema = new Schema<IObituary>(
     lifeStory: {
       type: String,
     },
-    wakeDetails: {
-      type: Object,
-    },
-    cortegeDeparture: {
-      type: Object,
-    },
-    cremation: {
-      type: Object,
+    event: {
+      type: [EventSchema],
+      default: [],
     },
     familyTree: { type: [FamilyTreeSchema], default: [] },
     favorites: [String],

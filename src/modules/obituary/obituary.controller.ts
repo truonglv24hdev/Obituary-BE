@@ -69,9 +69,8 @@ export default class ObituaryController {
           familyTree: req.body.familyTree
             ? JSON.parse(req.body.familyTree)
             : [],
-          timeLine: req.body.timeLine
-            ? JSON.parse(req.body.timeLine)
-            : [],
+          timeLine: req.body.timeLine ? JSON.parse(req.body.timeLine) : [],
+          event: req.body.event ? JSON.parse(req.body.event) : [],
         };
 
         const obituary = await this.ObituaryService.updateObituaryById(
@@ -86,9 +85,8 @@ export default class ObituaryController {
           familyTree: req.body.familyTree
             ? JSON.parse(req.body.familyTree)
             : [],
-          timeLine: req.body.timeLine
-            ? JSON.parse(req.body.timeLine)
-            : [],
+          timeLine: req.body.timeLine ? JSON.parse(req.body.timeLine) : [],
+          event: req.body.event ? JSON.parse(req.body.event) : [],
         };
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,

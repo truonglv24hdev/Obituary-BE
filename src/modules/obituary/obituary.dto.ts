@@ -6,7 +6,7 @@ import {
   ValidateNested,
   IsObject,
 } from "class-validator";
-import { IFamilyTree, ITimeLine } from "./obituary.interface";
+import { IEvent, IFamilyTree, ITimeLine } from "./obituary.interface";
 import { Type } from "class-transformer";
 
 export class EventDto {
@@ -20,18 +20,22 @@ export class EventDto {
 
   @IsNotEmpty()
   @IsString()
+  @IsArray()
   public date!: string;
 
   @IsNotEmpty()
   @IsString()
+  @IsArray()
   public time?: string;
 
   @IsNotEmpty()
   @IsString()
+  @IsArray()
   public timeFrom?: string;
 
   @IsNotEmpty()
   @IsString()
+  @IsArray()
   public timeTo?: string;
 }
 
@@ -72,19 +76,8 @@ export default class ObituaryDto {
   public timeLine: ITimeLine[] | undefined;
 
   @IsOptional()
-  @ValidateNested()
-  @Type(() => EventDto)
-  public wakeDetails?: EventDto;
-
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => EventDto)
-  public cortegeDeparture?: EventDto;
-
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => EventDto)
-  public cremation?: EventDto;
+  @IsArray()
+  public event: IEvent[] | undefined;
 
   @IsOptional()
   @IsArray()
