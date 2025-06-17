@@ -69,6 +69,7 @@ export default class ObituaryController {
           familyTree: req.body.familyTree
             ? JSON.parse(req.body.familyTree)
             : [],
+          favorites: req.body.favorites ? JSON.parse(req.body.favorites) : [],
           timeLine: req.body.timeLine ? JSON.parse(req.body.timeLine) : [],
           event: req.body.event ? JSON.parse(req.body.event) : [],
         };
@@ -85,6 +86,7 @@ export default class ObituaryController {
           familyTree: req.body.familyTree
             ? JSON.parse(req.body.familyTree)
             : [],
+          favorites: req.body.favorites ? JSON.parse(req.body.favorites) : [],
           timeLine: req.body.timeLine ? JSON.parse(req.body.timeLine) : [],
           event: req.body.event ? JSON.parse(req.body.event) : [],
         };

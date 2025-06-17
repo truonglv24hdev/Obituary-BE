@@ -58,7 +58,7 @@ const ObituarySchema = new Schema<IObituary>(
       default: [],
     },
     familyTree: { type: [FamilyTreeSchema], default: [] },
-    favorites: [String],
+    favorites: [{type:Object}],
     timeLine: {
       type: [TimeLineSchema],
       default: [],

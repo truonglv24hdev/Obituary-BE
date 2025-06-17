@@ -37,7 +37,7 @@ export default interface IObituary {
   wordsFromFamily: string;
   lifeStory: string;
   familyTree: IFamilyTree[];
-  favorites: string[];
+  favorites: [object];
   timeLine: ITimeLine[];
   event: IEvent[];
   gallery: string[];

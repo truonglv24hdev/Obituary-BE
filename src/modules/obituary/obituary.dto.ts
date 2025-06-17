@@ -67,7 +67,7 @@ export default class ObituaryDto {
   @IsNotEmpty()
   @IsArray()
   @IsString({ each: true })
-  public favorites: string[] | undefined;
+  public favorites: [] | undefined;
 
   @IsOptional()
   @IsNotEmpty()
