@@ -10,18 +10,18 @@ import {
   IsBoolean,
 } from "class-validator";
 
-export class WakeServiceRSVPDTO {
+export class ServiceRSVPDTO {
   @IsNotEmpty()
   @IsBoolean()
-  public attending!: boolean;
+  public attending?: string;
   
   @IsNotEmpty()
   @IsString()
-  public date!: string;
+  public date?: string;
 
   @IsNotEmpty()
   @IsString()
-  public time!: string;
+  public time?: string;
 }
 
 export default class RSVPDto {
@@ -52,16 +52,16 @@ export default class RSVPDto {
 
   @IsOptional()
   @ValidateNested()
-  @Type(() => WakeServiceRSVPDTO)
-  public WakeServiceRSVPDTO?: WakeServiceRSVPDTO;
+  @Type(() => ServiceRSVPDTO)
+  public wakeService?: ServiceRSVPDTO;
 
   @IsOptional()
-  @IsNotEmpty()
-  @IsBoolean()
-  public cortegeDepartureRSVP: boolean | undefined;
+  @ValidateNested()
+  @Type(() => ServiceRSVPDTO)
+  public cortegeDeparture?: ServiceRSVPDTO;
 
   @IsOptional()
-  @IsNotEmpty()
-  @IsBoolean()
-  public cremationRSVP: boolean | undefined;
+  @ValidateNested()
+  @Type(() => ServiceRSVPDTO)
+  public cremation?: ServiceRSVPDTO;
 }

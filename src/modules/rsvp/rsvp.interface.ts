@@ -1,17 +1,18 @@
-export interface IWakeServiceRSVP {
-  attending: boolean;
-  date: Date;
+export interface IServiceRSVP {
+  attending: string;
+  date: string;
   time: string;
 }
 
 export default interface IRSVP {
   _id: string;
+  obituaryId: string;
   first_name: string;
   last_name: string;
   verification: boolean;
   email: string;
   contact: string;
-  wakeServiceRSVP: IWakeServiceRSVP;
-  cortegeDepartureRSVP: boolean;
-  cremationRSVP: boolean;
+  wakeService: IServiceRSVP;
+  cortegeDeparture: IServiceRSVP;
+  cremation: IServiceRSVP;
 }

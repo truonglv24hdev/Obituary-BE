@@ -54,7 +54,7 @@ export default class RSVPRoute implements Route {
     this.router.post(
       this.path,
       authMiddleware,
-      createRSVP,
+      // createRSVP,
       this.rsvpController.createRSVP
     );
 

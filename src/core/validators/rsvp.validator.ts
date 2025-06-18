@@ -2,20 +2,6 @@ import { body, param, validateRequest } from "./validator";
 
 const createRSVP = validateRequest(
   [
-    body("location")
-      .isString()
-      .optional()
-      .isLength({ min: 5, max: 100 })
-      .withMessage("Location must be between 5 and 100 characters"),
-
-    body("date")
-      .isString()
-      .optional()
-      .isLength({ min: 5, max: 100 })
-      .withMessage("Date must be between 5 and 100 characters"),
-
-    body("time").isString().optional().isLength({ min: 3, max: 100 }),
-
     body("first_name")
       .isString()
       .isLength({ min: 2, max: 100 })
@@ -23,44 +9,38 @@ const createRSVP = validateRequest(
 
     body("last_name")
       .isString()
-      .isLength({ min: 2, max: 100 })
-      .withMessage("Last name must be between 5 and 100 characters"),
+      .isLength({ min: 2, max: 100 }),
 
     body("email")
-      .isEmail()
-      .isLength({ min: 2, max: 100 })
-      .withMessage("Email must be between 5 and 100 characters"),
+      .optional()
+      .isEmail(),
 
     body("contact")
-      .isString()
-      .isLength({ min: 10, max: 100 })
-      .withMessage("Contact must be between 5 and 100 characters"),
-
-    body("wakeServiceRSVP").isObject().optional(),
-
-    body("wakeServiceRSVP.date")
-      .isString()
-      .withMessage("date must be a boolean"),
-
-    body("wakeServiceRSVP.time")
-      .isString()
-      .isLength({ max: 300 })
-      .withMessage("Message must be under 300 characters"),
-
-    body("wakeServiceRSVP.attending")
-      .isBoolean()
-      .isLength({ max: 300 })
-      .withMessage("Message must be under 300 characters"),
-
-    body("cortegeDepartureRSVP")
       .optional()
-      .isBoolean()
-      .withMessage("cortegeDepartureRSVP must be true or false"),
-
-    body("cremationRSVP")
-      .optional()
-      .isBoolean()
-      .withMessage("cremationRSVP must be true or false"),
+      .isString(),
+    
+    body("obituaryId").optional(),
+    body("wakeService").optional().customSanitizer((value) => {
+      try {
+        return typeof value === "string" ? JSON.parse(value) : value;
+      } catch (e) {
+        return {};
+      }
+    }),
+    body("cortegeDeparture").optional().customSanitizer((value) => {
+      try {
+        return typeof value === "string" ? JSON.parse(value) : value;
+      } catch (e) {
+        return {};
+      }
+    }),
+    body("cremation").optional().customSanitizer((value) => {
+      try {
+        return typeof value === "string" ? JSON.parse(value) : value;
+      } catch (e) {
+        return {};
+      }
+    }),
   ],
   false
 );

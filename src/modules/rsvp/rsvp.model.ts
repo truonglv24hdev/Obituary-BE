@@ -15,6 +15,10 @@ const RSVPSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "users",
     },
+    obituaryId: {
+      type: Schema.Types.ObjectId,
+      ref: "obituaries",
+    },
     verification: {
       type: Boolean,
       default: false,
@@ -25,16 +29,14 @@ const RSVPSchema = new mongoose.Schema(
     contact: {
       type: String,
     },
-    wakeServiceRSVP: {
+    wakeService: {
       type: Object,
     },
-    cortegeDepartureRSVP: {
-      type: Boolean,
-      default: null,
+    cortegeDeparture: {
+      type: Object,
     },
-    cremationRSVP: {
-      type: Boolean,
-      default: null,
+    cremation: {
+      type: Object,
     },
   },
   {
