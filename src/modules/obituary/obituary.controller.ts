@@ -50,18 +50,31 @@ export default class ObituaryController {
     try {
       const userId = req.user.id;
 
+      let galleryOld: string[] = [];
+      if (req.body.galleryOld) {
+        try {
+          galleryOld = JSON.parse(req.body.galleryOld);
+        } catch (e) {
+          galleryOld = [];
+        }
+      }
+
       if (req.files) {
         const files = req.files as {
-          photo?: Express.Multer.File[];
+          gallery?: Express.Multer.File[];
           video?: Express.Multer.File[];
           headerImage?: Express.Multer.File[];
         };
 
+        const galleryNew = (files.gallery ?? []).map(
+          (file) => `/uploads/${file.filename}`
+        );
+
+        const gallery = [...galleryOld, ...galleryNew];
+
         const model: ObituaryDto = {
           ...req.body,
-          gallery: (files.photo ?? []).map(
-            (file) => `/uploads/${file.filename}`
-          ),
+          gallery,
           video: (files.video ?? []).map((file) => `/uploads/${file.filename}`),
           headerImage: files.headerImage?.[0]
             ? `/uploads/${files.headerImage[0].filename}`
@@ -81,8 +94,17 @@ export default class ObituaryController {
         );
         res.status(200).json(obituary);
       } else {
+        let galleryOld: string[] = [];
+        if (req.body.galleryOld) {
+          try {
+            galleryOld = JSON.parse(req.body.galleryOld);
+          } catch (e) {
+            galleryOld = [];
+          }
+        }
         const model: ObituaryDto = {
           ...req.body,
+          gallery: galleryOld,
           familyTree: req.body.familyTree
             ? JSON.parse(req.body.familyTree)
             : [],
