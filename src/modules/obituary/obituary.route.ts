@@ -194,6 +194,11 @@ export default class ObituaryRoute implements Route {
      */
     this.router.get(
       this.path + "/:id",
+      this.ObituaryController.getObituaryByMemorialId
+    );
+
+    this.router.get(
+      this.path + "/memorial/:id",
       this.ObituaryController.getObituaryById
     );
 

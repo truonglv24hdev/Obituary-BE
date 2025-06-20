@@ -124,14 +124,27 @@ export default class ObituaryController {
     }
   };
 
+  public getObituaryByMemorialId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const obituary = await this.ObituaryService.getObituaryByMemorialId(req.params.id);
+      res.status(200).json(obituary);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getObituaryById = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const rsvp = await this.ObituaryService.getObituaryById(req.params.id);
-      res.status(200).json(rsvp);
+      const obituary = await this.ObituaryService.getObituaryById(req.params.id);
+      res.status(200).json(obituary);
     } catch (error) {
       next(error);
     }
