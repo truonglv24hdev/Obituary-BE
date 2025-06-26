@@ -12,10 +12,8 @@ export default class CondolencesDto {
   public message: string | undefined;
 
   @IsOptional()
-  @IsNotEmpty()
-  public photo: string[] | undefined;
+  public photo: string | undefined;
 
   @IsOptional()
-  @IsNotEmpty()
-  public video: string[] | undefined;
+  public video: string | undefined;
 }

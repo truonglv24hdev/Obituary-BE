@@ -31,8 +31,7 @@ const createObituary = validateRequest(
     body("gallery").isArray().optional(),
 
     body("video").isArray().optional(),
-  ],
-  false
+  ]
 );
 
 export { createObituary };

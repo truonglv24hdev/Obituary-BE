@@ -14,9 +14,7 @@ const createCondolences = validateRequest([
     .isLength({ min: 5, max: 100 })
     .withMessage("Email must be between 5 and 100 characters"),
 
-  body("photo").isArray().optional(),
-
-  body("video").isArray().optional(),
+  body("message").isString().optional(),
 ]);
 
 export { createCondolences };

@@ -41,8 +41,7 @@ const createRSVP = validateRequest(
         return {};
       }
     }),
-  ],
-  false
+  ]
 );
 
 const updateRSVP = validateRequest(
@@ -82,8 +81,7 @@ const updateRSVP = validateRequest(
       .isString()
       .isLength({ min: 10, max: 100 })
       .withMessage("Contact must be between 5 and 100 characters"),
-  ],
-  false
+  ]
 );
 
 export { createRSVP, updateRSVP };

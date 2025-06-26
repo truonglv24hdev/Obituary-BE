@@ -20,8 +20,12 @@ export default class CondolencesController {
         };
         const model: CondolencesDto = {
           ...req.body,
-          photo: (files.photo ?? []).map((file) => `/uploads/${file.filename}`),
-          video: (files.video ?? []).map((file) => `/uploads/${file.filename}`),
+          ...(files.photo?.[0] && {
+            photo: `/uploads/${files.photo[0].filename}`,
+          }),
+          ...(files.video?.[0] && {
+            video: `/uploads/${files.video[0].filename}`,
+          }),
         };
         const obituary = await this.condolencesService.createCondolences(
           req.params.id,
@@ -56,7 +60,7 @@ export default class CondolencesController {
         );
 
         res.status(200).json(result);
-      }else{
+      } else {
         res.status(404).json("not authozation");
       }
     } catch (error) {}
@@ -75,9 +79,22 @@ export default class CondolencesController {
         );
 
         res.status(200).json(result);
-      }else{
+      } else {
         res.status(404).json("not authozation");
       }
+    } catch (error) {}
+  };
+
+  public getCondolences = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const condolences = await this.condolencesService.getCondolences(
+        req.params.id
+      );
+      res.status(200).json(condolences);
     } catch (error) {}
   };
 }

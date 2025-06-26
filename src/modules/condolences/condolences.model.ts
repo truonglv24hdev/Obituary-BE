@@ -7,9 +7,9 @@ const CondolencesSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "users",
     },
-    memorialId: {
+    obituaryId: {
       type: Schema.Types.ObjectId,
-      ref: "memorials",
+      ref: "obituaries",
     },
     full_name: {
       type: String,
@@ -21,10 +21,9 @@ const CondolencesSchema = new mongoose.Schema(
     },
     message: {
       type: String,
-      required: true,
     },
-    photo: [String],
-    video: [String],
+    photo: { type: String, required: false },
+    video: { type: String, required: false },
     status: {
       type: Boolean,
       default: false,

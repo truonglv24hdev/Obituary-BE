@@ -116,5 +116,10 @@ export default class CondolencesRoute implements Route {
       authMiddleware,
       this.condolencesController.deleteCondolences
     );
+
+    this.router.get(
+      this.path + "/:id",
+      this.condolencesController.getCondolences
+    );
   }
 }

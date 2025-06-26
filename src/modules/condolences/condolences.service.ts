@@ -10,7 +10,7 @@ class CondolencesService {
   public memorialSchema = memorialModel;
 
   public async createCondolences(
-    memorialId: string,
+    obituaryId: string,
     userId: string,
     model: CondolencesDto
   ): Promise<ICondolences> {
@@ -20,7 +20,7 @@ class CondolencesService {
 
     const condolences = await this.condolencesSchema.create({
       user: userId,
-      memorialId: memorialId,
+      obituaryId: obituaryId,
       ...model,
     });
 
@@ -28,7 +28,7 @@ class CondolencesService {
       throw new HttpException(400, "Obituary id not can create");
     }
 
-    await this.memorialSchema.findByIdAndUpdate(memorialId, {
+    await this.memorialSchema.findByIdAndUpdate(obituaryId, {
       $push: { condolences: condolences._id },
     });
 
@@ -56,6 +56,17 @@ class CondolencesService {
     const condolences = await this.condolencesSchema.findByIdAndDelete(
       memorialId
     );
+    if (!condolences) {
+      throw new HttpException(404, "Condolence not found");
+    }
+
+    return condolences;
+  }
+
+  public async getCondolences(obituaryId: string): Promise<ICondolences[]> {
+    const condolences = await this.condolencesSchema.find({
+      obituaryId: obituaryId,
+    });
     if (!condolences) {
       throw new HttpException(404, "Condolence not found");
     }

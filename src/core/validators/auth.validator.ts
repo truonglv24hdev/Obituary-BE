@@ -11,8 +11,7 @@ const signIn = validateRequest(
     body("password")
       .isLength({ min: 6, max: 20 })
       .withMessage("Password must be between 6 and 20 characters"),
-  ],
-  false
+  ]
 );
 
 const signUp = validateRequest(
@@ -31,8 +30,7 @@ const signUp = validateRequest(
     body("password")
       .isLength({ min: 6, max: 20 })
       .withMessage("Password must be between 6 and 20 characters"),
-  ],
-  false
+  ]
 );
 
 export { signIn, signUp };
