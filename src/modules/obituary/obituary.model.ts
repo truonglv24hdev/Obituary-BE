@@ -22,7 +22,6 @@ const FamilyMemberSchema = new Schema(
     name: { type: String, required: true },
     avatar: { type: String, required: true },
   },
-  { _id: false }
 );
 
 const FamilyTreeSchema = new Schema({

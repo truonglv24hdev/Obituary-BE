@@ -42,6 +42,19 @@ export default class ObituaryController {
     }
   };
 
+  public postUpload = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const imageUrl = `/uploads/${req.file?.filename}`;
+      res.status(200).json({ url: imageUrl });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public updateObituaryById = async (
     req: Request,
     res: Response,
@@ -71,7 +84,6 @@ export default class ObituaryController {
         );
 
         const gallery = [...galleryOld, ...galleryNew];
-
         const model: ObituaryDto = {
           ...req.body,
           gallery,
@@ -130,7 +142,9 @@ export default class ObituaryController {
     next: NextFunction
   ) => {
     try {
-      const obituary = await this.ObituaryService.getObituaryByMemorialId(req.params.id);
+      const obituary = await this.ObituaryService.getObituaryByMemorialId(
+        req.params.id
+      );
       res.status(200).json(obituary);
     } catch (error) {
       next(error);
@@ -143,7 +157,9 @@ export default class ObituaryController {
     next: NextFunction
   ) => {
     try {
-      const obituary = await this.ObituaryService.getObituaryById(req.params.id);
+      const obituary = await this.ObituaryService.getObituaryById(
+        req.params.id
+      );
       res.status(200).json(obituary);
     } catch (error) {
       next(error);

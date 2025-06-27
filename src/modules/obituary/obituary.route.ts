@@ -174,6 +174,13 @@ export default class ObituaryRoute implements Route {
       this.ObituaryController.updateObituaryById
     );
 
+    this.router.post(
+      this.path + "/upload",
+      authMiddleware,
+      upload.single("avatar"),
+      this.ObituaryController.postUpload
+    );
+
     /**
      * @openapi
      * '/api/obituary':

@@ -6,6 +6,7 @@ export interface IFamilyTree {
   category: string;
   members: [
     {
+      _id: string;
       name: string;
       image: string;
     }
