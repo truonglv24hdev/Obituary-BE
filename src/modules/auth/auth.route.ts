@@ -1,7 +1,7 @@
 import Route from "../../core/interface/routes.interface";
 import { Router } from "express";
 import AuthController from "./auth.controller";
-import { signIn,signUp } from "../../core/validators/auth.validator";
+import { changePassword, sendLink, sendOtp, signIn,signUp } from "../../core/validators/auth.validator";
 
 export default class AuthRoute implements Route {
   public path = "/api";
@@ -74,6 +74,24 @@ export default class AuthRoute implements Route {
       this.path + "/sign-in",
       signIn,
       this.authController.signIn
+    );
+
+    this.router.post(
+      this.path + "/send-link",
+      sendLink,
+      this.authController.sendLink
+    );
+
+    this.router.post(
+      this.path + "/otp/:email",
+      sendOtp,
+      this.authController.otp
+    );
+
+    this.router.post(
+      this.path + "/reset-password/:email",
+      changePassword,
+      this.authController.resetPassword
     );
   }
 }

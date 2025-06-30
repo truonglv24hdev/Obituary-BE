@@ -6,3 +6,9 @@ export interface DataStoreInToken {
 export interface TokenData {
   token: string;
 }
+
+export interface IForgotPassword {
+  email: string;
+  otp: string;
+  expireAt: Date;
+}
