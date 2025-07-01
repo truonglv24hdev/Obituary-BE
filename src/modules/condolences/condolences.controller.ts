@@ -78,7 +78,7 @@ export default class CondolencesController {
           req.params.id
         );
 
-        res.status(200).json(result);
+        res.status(200).json({ message: "Delete success.", code: 1 });
       } else {
         res.status(404).json("not authozation");
       }

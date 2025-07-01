@@ -9,4 +9,5 @@ export default interface ICondolences {
   status: boolean;
   date: Date;
   time: string;
+  deleted: boolean
 }

@@ -28,9 +28,12 @@ class CondolencesService {
       throw new HttpException(400, "Obituary id not can create");
     }
 
-    await this.memorialSchema.findByIdAndUpdate(obituaryId, {
-      $push: { condolences: condolences._id },
-    });
+    await this.memorialSchema.findOneAndUpdate(
+      { obituaryId: obituaryId },
+      {
+        $push: { condolences: condolences._id },
+      }
+    );
 
     return condolences;
   }
@@ -52,12 +55,14 @@ class CondolencesService {
     return condolences;
   }
 
-  public async deleteCondolences(memorialId: string): Promise<ICondolences> {
-    const condolences = await this.condolencesSchema.findByIdAndDelete(
-      memorialId
+  public async deleteCondolences(condolencesId: string): Promise<ICondolences> {
+    const condolences = await this.condolencesSchema.findByIdAndUpdate(
+      condolencesId,
+      { deleted: true },
+      {new:true}
     );
     if (!condolences) {
-      throw new HttpException(404, "Condolence not found");
+      throw new HttpException(402, "Condolence not found");
     }
 
     return condolences;

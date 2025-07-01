@@ -4,9 +4,11 @@ import { isEmptyObject } from "../../core/utils/helper";
 import HttpException from "../../core/middleware/httpException";
 import IRSVP from "./rsvp.interface";
 import IPagination from "../../core/interface/pagination.interface";
+import memorialModel from "../memorial/memorial.model";
 
 class RSVPService {
   public rsvpSchema = rsvpModel;
+  public memorialSchema = memorialModel;
 
   public async createRSVP(userId: string, model: RSVPDto): Promise<IRSVP> {
     if (isEmptyObject(model)) {
@@ -17,6 +19,12 @@ class RSVPService {
     if (!rsvp) {
       throw new HttpException(400, "RSVP id not can create");
     }
+
+    await this.memorialSchema.findOneAndUpdate(
+      { obituaryId: rsvp.obituaryId },
+      { $push: { rsvps: rsvp._id } },
+      { new: true }
+    );
 
     return rsvp;
   }

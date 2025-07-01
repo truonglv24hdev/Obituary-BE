@@ -8,6 +8,10 @@ const MemorialSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "users",
     },
+    obituaryId: {
+      type: Schema.Types.ObjectId,
+      ref: "obituaries",
+    },
     picture: {
       type: String,
       required: false,
@@ -40,16 +44,18 @@ const MemorialSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    condolences: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "condolences",
-      },
-    ],
-    premium:{
+    rsvps: [{
+      type: Schema.Types.ObjectId,
+      ref: "rsvp",
+    }],
+    condolences: [{
+      type: Schema.Types.ObjectId,
+      ref: "condolences",
+    }],
+    premium: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   {
     timestamps: true,

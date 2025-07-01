@@ -8,6 +8,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import condolencesModel from "../condolences/condolences.model";
 import UserSchema from "../user/user.model";
 import obituaryModel from "../obituary/obituary.model";
+import rsvpModel from "../rsvp/rsvp.model";
 dayjs.extend(customParseFormat);
 
 class MemorialService {
@@ -32,6 +33,12 @@ class MemorialService {
       memorial: memorial._id,
       user: userId,
     });
+
+    await this.memorialSchema.findByIdAndUpdate(
+      memorial._id,
+      { obituaryId: obituary._id },
+      { new: true }
+    );
 
     await this.userSchema.findByIdAndUpdate(
       userId,
@@ -77,9 +84,14 @@ class MemorialService {
   }
 
   public async getMemorialById(memorialId: string): Promise<IMemorial> {
-    const memorial = await this.memorialSchema
-      .findById(memorialId)
-      .populate({ path: "condolences", model: condolencesModel });
+    const memorial = await this.memorialSchema.findById(memorialId).populate([
+      {
+        path: "condolences",
+        model: condolencesModel,
+        match: { deleted: false },
+      },
+      { path: "rsvps", model: rsvpModel },
+    ]);
     if (!memorial) {
       throw new HttpException(404, "memorial is not found");
     }
@@ -88,9 +100,11 @@ class MemorialService {
   }
 
   public async getMemorialByUser(userId: string): Promise<IMemorial[]> {
-    const memorial = await this.memorialSchema
-      .find({ user: userId })
-      .populate({ path: "condolences", model: condolencesModel });
+    const memorial = await this.memorialSchema.find({ user: userId }).populate([
+      { path: "condolences", model: condolencesModel },
+      { path: "rsvps", model: rsvpModel },
+    ]);
+
     if (!memorial) {
       throw new HttpException(404, "memorial is not found");
     }
