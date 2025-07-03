@@ -80,8 +80,25 @@ export default class MemorialController {
   ) => {
     try {
       const userId = req.user.id;
-      const user = await this.memorialService.getMemorialByUser(userId);
-      res.status(200).json(user);
+
+      // lấy page & limit từ query
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 4;
+      const skip = (page - 1) * limit;
+
+      const memorials = await this.memorialService.getMemorialByUser(
+        userId,
+        skip,
+        limit
+      );
+      const total = await this.memorialService.countMemorialByUser(userId);
+
+      res.status(200).json({
+        data: memorials,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+      });
     } catch (error) {
       next(error);
     }

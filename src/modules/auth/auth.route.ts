@@ -83,6 +83,11 @@ export default class AuthRoute implements Route {
     );
 
     this.router.post(
+      this.path + "/send-link/:email",
+      this.authController.resendLink
+    );
+
+    this.router.post(
       this.path + "/otp/:email",
       sendOtp,
       this.authController.otp

@@ -99,19 +99,25 @@ class MemorialService {
     return memorial;
   }
 
-  public async getMemorialByUser(userId: string): Promise<IMemorial[]> {
-    const memorial = await this.memorialSchema.find({ user: userId }).populate([
-      { path: "condolences", model: condolencesModel },
-      { path: "rsvps", model: rsvpModel },
-    ]);
-
-    if (!memorial) {
-      throw new HttpException(404, "memorial is not found");
-    }
-
-    return memorial;
+  public async getMemorialByUser(
+    userId: string,
+    skip: number,
+    limit: number
+  ): Promise<IMemorial[]> {
+    return await this.memorialSchema
+      .find({ user: userId })
+      .skip(skip)
+      .limit(limit)
+      .populate([
+        { path: "condolences", model: condolencesModel },
+        { path: "rsvps", model: rsvpModel },
+      ]);
   }
 
+  public async countMemorialByUser(userId: string): Promise<number> {
+    return await this.memorialSchema.countDocuments({ user: userId });
+  }
+  
   public async deleteMemorial(
     memorialId: string,
     userId: string

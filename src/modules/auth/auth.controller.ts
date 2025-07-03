@@ -36,6 +36,16 @@ export default class AuthController {
     }
   };
 
+  public resendLink = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email } = req.params;
+      const result = await this.authService.sendLink(email);
+      res.status(201).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public otp = async (
     req: Request,
     res: Response,
