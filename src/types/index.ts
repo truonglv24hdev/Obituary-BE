@@ -4,9 +4,9 @@ export enum EGender {
 }
 
 export enum EPrivacy {
-  PUBLIC = "public",
-  PRIVATE = "private",
-  PROTECTED = "protected"
+  PUBLIC = "Public",
+  PRIVATE = "Private",
+  PROTECTED = "Password protected"
 }
 
 export enum ERole {

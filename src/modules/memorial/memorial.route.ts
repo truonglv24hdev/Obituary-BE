@@ -196,5 +196,17 @@ export default class MemorialRoute implements Route {
       authMiddleware,
       this.memorialController.deleteMemorial
     );
+
+    this.router.post(
+      this.path + "/verify/:id",
+      authMiddleware,
+      this.memorialController.verify
+    );
+
+    this.router.post(
+      this.path + "/forgot-password/",
+      authMiddleware,
+      this.memorialController.forgotPassword
+    );
   }
 }

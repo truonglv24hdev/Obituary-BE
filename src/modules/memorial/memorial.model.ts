@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import IMemorial from "./memorial.interface";
-import { EGender } from "../../types";
+import { EGender, EPrivacy } from "../../types";
 
 const MemorialSchema = new mongoose.Schema(
   {
@@ -33,6 +33,11 @@ const MemorialSchema = new mongoose.Schema(
       enum: Object.values(EGender),
       default: EGender.MALE,
     },
+    privacy: {
+      type: String,
+      enum: Object.values(EPrivacy),
+      default: EPrivacy.PUBLIC,
+    },
     born: {
       type: String,
     },
@@ -44,17 +49,28 @@ const MemorialSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    rsvps: [{
-      type: Schema.Types.ObjectId,
-      ref: "rsvp",
-    }],
-    condolences: [{
-      type: Schema.Types.ObjectId,
-      ref: "condolences",
-    }],
+    rsvps: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "rsvp",
+      },
+    ],
+    condolences: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "condolences",
+      },
+    ],
     premium: {
       type: Boolean,
       default: false,
+    },
+    setPassword: {
+      type: Boolean,
+      default: false,
+    },
+    password: {
+      type: String,
     },
   },
   {

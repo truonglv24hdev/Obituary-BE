@@ -103,4 +103,46 @@ export default class MemorialController {
       next(error);
     }
   };
+
+  public verify = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const { password } = req.body;
+
+      const result = await this.memorialService.verify(id, password);
+      switch (result) {
+        case 3:
+          res.json({ message: "Not found", code: 1 });
+          break;
+        case 2:
+          res.status(200).json({ success: "true", code: 2 });
+          break;
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public forgotPassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userId = req.user.id;
+      const { email } = req.body;
+      const memorialId = Array.isArray(req.headers["x-memorial-id"])
+        ? req.headers["x-memorial-id"][0]
+        : req.headers["x-memorial-id"] ?? "";
+
+      const result = await this.memorialService.forgotPassword(
+        email,
+        memorialId,
+        userId
+      );
+      res.status(201).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

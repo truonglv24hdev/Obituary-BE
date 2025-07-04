@@ -24,6 +24,9 @@ export default class MemorialDto {
   public gender: string | undefined;
 
   @IsNotEmpty()
+  public privacy: string | undefined;
+
+  @IsNotEmpty()
   public born: Date | undefined;
 
   @IsNotEmpty()
@@ -35,4 +38,12 @@ export default class MemorialDto {
   @IsBoolean()
   @IsNotEmpty()
   public premium: boolean | undefined;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  public setPassword: boolean | undefined;
+
+  @IsOptional()
+  @IsString()
+  public password: string | undefined;
 }
