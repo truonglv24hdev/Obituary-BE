@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import IMemorial from "./memorial.interface";
-import { EGender, EPrivacy } from "../../types";
+import { EGender, EModeration, EPrivacy } from "../../types";
 
 const MemorialSchema = new mongoose.Schema(
   {
@@ -72,6 +72,15 @@ const MemorialSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    require_email: {
+      type: Boolean,
+      default: false,
+    },
+    moderation:{
+      type:String,
+      enum: Object.values(EModeration),
+      default: EModeration.PRE,
+    }
   },
   {
     timestamps: true,

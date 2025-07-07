@@ -8,11 +8,7 @@ const createCondolences = validateRequest([
     .withMessage("Full name must be at least 2 character"),
 
   body("email")
-    .isEmail()
-    .optional()
-    .withMessage("Invalid email format")
-    .isLength({ min: 5, max: 100 })
-    .withMessage("Email must be between 5 and 100 characters"),
+    .optional(),
 
   body("message").isString().optional(),
 ]);

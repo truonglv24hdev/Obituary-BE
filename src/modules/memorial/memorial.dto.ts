@@ -46,4 +46,12 @@ export default class MemorialDto {
   @IsOptional()
   @IsString()
   public password: string | undefined;
+
+  @IsBoolean()
+  @IsOptional()
+  public require_email: boolean | undefined;
+
+  @IsString()
+  @IsOptional()
+  public moderation: string | undefined;
 }

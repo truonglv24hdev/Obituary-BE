@@ -48,9 +48,12 @@ class ObituaryService {
     return obituaryUpdate;
   }
 
-  public async getObituaryByMemorialId(obituaryId: string): Promise<IObituary> {
+  public async getObituaryByMemorialId(
+    obituaryId: string,
+    userId: string
+  ): Promise<IObituary> {
     const Obituary = await this.obituarySchema
-      .findOne({ memorial: obituaryId })
+      .findOne({ memorial: obituaryId, user: userId })
       .populate({ path: "memorial", model: memorialModel });
     if (!Obituary) {
       throw new HttpException(404, "Obituary not found");

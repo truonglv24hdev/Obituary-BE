@@ -2,13 +2,13 @@ import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export default class CondolencesDto {
   @IsString()
+  @IsNotEmpty()
   public full_name: string | undefined;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsOptional()
   public email: string | undefined;
 
-  @IsNotEmpty()
+  @IsOptional()
   public message: string | undefined;
 
   @IsOptional()

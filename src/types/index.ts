@@ -13,3 +13,8 @@ export enum ERole {
   USER = "USER",
   ADMIN = "ADMIN",
 }
+
+export enum EModeration {
+  PRE = "pre",
+  POST = "post",
+}

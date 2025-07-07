@@ -1,4 +1,4 @@
-import { EGender, EPrivacy } from "../../types";
+import { EGender, EModeration, EPrivacy } from "../../types";
 import IRSVP from "../rsvp/rsvp.interface";
 
 export default interface IMemorial {
@@ -19,4 +19,6 @@ export default interface IMemorial {
   premium: false;
   setPassword: boolean;
   password: string;
+  require_email: boolean;
+  moderation: EModeration
 }

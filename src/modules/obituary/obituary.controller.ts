@@ -142,8 +142,10 @@ export default class ObituaryController {
     next: NextFunction
   ) => {
     try {
+      const userId = req.user.id;
       const obituary = await this.ObituaryService.getObituaryByMemorialId(
-        req.params.id
+        req.params.id,
+        userId
       );
       res.status(200).json(obituary);
     } catch (error) {
