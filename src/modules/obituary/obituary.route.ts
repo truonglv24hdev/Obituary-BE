@@ -177,7 +177,7 @@ export default class ObituaryRoute implements Route {
     this.router.post(
       this.path + "/upload",
       authMiddleware,
-      upload.single("avatar"),
+      upload.single("image"),
       this.ObituaryController.postUpload
     );
 

@@ -8,7 +8,7 @@ const signIn = validateRequest([
     .withMessage("Email must be between 5 and 100 characters"),
 
   body("password")
-    .isLength({ min: 6, max: 20 })
+    .isLength({ min: 6 })
     .withMessage("Password must be between 6 and 20 characters"),
 ]);
 
@@ -24,7 +24,7 @@ const sendOtp = validateRequest([body("otp").isString()]);
 
 const changePassword = validateRequest([
   body("password")
-    .isLength({ min: 6, max: 20 })
+    .isLength({ min: 6 })
     .withMessage("Password must be between 6 and 20 characters"),
 
   body("confirmPassword")
@@ -45,7 +45,7 @@ const signUp = validateRequest([
     .withMessage("Email must be between 5 and 100 characters"),
 
   body("password")
-    .isLength({ min: 6, max: 20 })
+    .isLength({ min: 6 })
     .withMessage("Password must be between 6 and 20 characters"),
 ]);
 

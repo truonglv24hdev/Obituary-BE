@@ -2,10 +2,12 @@ import IMemorial from "../memorial/memorial.interface";
 import IUser from "../user/user.interface";
 
 export interface IFamilyTree {
+  id: string;
   _id: string;
   category: string;
   members: [
     {
+      id: string;
       _id: string;
       name: string;
       image: string;

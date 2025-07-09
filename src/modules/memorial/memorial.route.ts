@@ -65,7 +65,7 @@ export default class MemorialRoute implements Route {
       this.path,
       authMiddleware,
       upload.single("picture"),
-      createMemorial,
+      // createMemorial,
       this.memorialController.createMemorial
     );
 

@@ -59,7 +59,7 @@ class CondolencesService {
     const condolences = await this.condolencesSchema.findByIdAndUpdate(
       condolencesId,
       { deleted: true },
-      {new:true}
+      { new: true }
     );
     if (!condolences) {
       throw new HttpException(402, "Condolence not found");
@@ -71,7 +71,9 @@ class CondolencesService {
   public async getCondolences(obituaryId: string): Promise<ICondolences[]> {
     const condolences = await this.condolencesSchema.find({
       obituaryId: obituaryId,
+      deleted: false,
     });
+    console.log(condolences)
     if (!condolences) {
       throw new HttpException(404, "Condolence not found");
     }

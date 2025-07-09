@@ -17,14 +17,14 @@ const EventSchema = new Schema({
   timeTo: [],
 });
 
-const FamilyMemberSchema = new Schema(
-  {
-    name: { type: String, required: true },
-    avatar: { type: String, required: true },
-  },
-);
+const FamilyMemberSchema = new Schema({
+  id: { type: String },
+  name: { type: String, required: true },
+  image: { type: String, required: true },
+});
 
 const FamilyTreeSchema = new Schema({
+  id: { type: String },
   category: { type: String, required: true },
   members: { type: [FamilyMemberSchema], default: [] },
 });
@@ -57,7 +57,7 @@ const ObituarySchema = new Schema<IObituary>(
       default: [],
     },
     familyTree: { type: [FamilyTreeSchema], default: [] },
-    favorites: [{type:Object}],
+    favorites: [{ type: Object }],
     timeLine: {
       type: [TimeLineSchema],
       default: [],

@@ -17,7 +17,7 @@ const updateUser = validateRequest([
     .withMessage("Email must be between 5 and 100 characters"),
 
   body("password")
-    .isLength({ min: 6, max: 20 })
+    .isLength({ min: 6 })
     .optional()
     .withMessage("Password must be between 6 and 20 characters"),
 

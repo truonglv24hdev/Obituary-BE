@@ -21,7 +21,7 @@ router.get(
       { expiresIn: "1d" }
     );
     res.redirect(
-      `http://localhost:3000/auth/callback?token=${token}`
+      `https://obituary-fe.vercel.app/auth/callback?token=${token}`
     );
   }
 );
@@ -39,10 +39,10 @@ router.get(
     const user = req.user as any;
     const token = jwt.sign(
       { id: user._id, email: user.email },
-      process.env.JWT_SECRET!,
+      "secret",
       { expiresIn: "1d" }
     );
-    res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
+    res.redirect(`https://obituary-fe.vercel.app/auth/callback?token=${token}`);
   }
 );
 
