@@ -210,6 +210,27 @@ class MemorialService {
       return "Email not find";
     }
   }
+
+  public async getMemorialBySearch(
+    firstName: string,
+    lastName: string
+  ): Promise<IMemorial> {
+    const memorial = await this.memorialSchema
+      .findOne({ first_name: firstName, last_name: lastName })
+      .populate([
+        {
+          path: "condolences",
+          model: condolencesModel,
+          match: { deleted: false },
+        },
+        { path: "rsvps", model: rsvpModel },
+      ]);
+    if (!memorial) {
+      throw new HttpException(404, "memorial is not found");
+    }
+
+    return memorial;
+  }
 }
 
 export default MemorialService;

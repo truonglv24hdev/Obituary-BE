@@ -9,34 +9,39 @@ import {
 import { IEvent, IFamilyTree, ITimeLine } from "./obituary.interface";
 import { Type } from "class-transformer";
 
+class ScheduleDto {
+  @IsString()
+  date!: string;
+
+  @IsString()
+  timeFrom!: string;
+
+  @IsString()
+  timeTo!: string;
+}
+
 export class EventDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  public description!: string;
+  id?: string;
 
   @IsNotEmpty()
   @IsString()
-  public location!: string;
+  eventTitle!: string;
 
   @IsNotEmpty()
   @IsString()
+  description!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  location!: string;
+
+  @IsOptional()
   @IsArray()
-  public date!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsArray()
-  public time?: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsArray()
-  public timeFrom?: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsArray()
-  public timeTo?: string;
+  @ValidateNested({ each: true })
+  @Type(() => ScheduleDto)
+  schedule!: ScheduleDto[];
 }
 
 export default class ObituaryDto {

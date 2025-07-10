@@ -53,13 +53,15 @@ export default class CondolencesController {
     next: NextFunction
   ) => {
     try {
-      const role = req.user.role;
-      if (role === ERole.ADMIN) {
+      const user = req.user.id;
+      if (user) {
         const result = await this.condolencesService.updateStatusCondolences(
           req.params.id
         );
 
-        res.status(200).json(result);
+        if (result) {
+          res.status(200).json({ message: "Accept success.", code: 1 });
+        }
       } else {
         res.status(404).json("not authozation");
       }
@@ -72,8 +74,8 @@ export default class CondolencesController {
     next: NextFunction
   ) => {
     try {
-      const role = req.user.role;
-      if (role === ERole.ADMIN) {
+      const user = req.user.id;
+      if (user) {
         const result = await this.condolencesService.deleteCondolences(
           req.params.id
         );
@@ -92,6 +94,19 @@ export default class CondolencesController {
   ) => {
     try {
       const condolences = await this.condolencesService.getCondolences(
+        req.params.id
+      );
+      res.status(200).json(condolences);
+    } catch (error) {}
+  };
+
+  public getAllCondolences = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const condolences = await this.condolencesService.getAllCondolences(
         req.params.id
       );
       res.status(200).json(condolences);

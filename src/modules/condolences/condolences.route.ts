@@ -121,5 +121,11 @@ export default class CondolencesRoute implements Route {
       this.path + "/:id",
       this.condolencesController.getCondolences
     );
+
+    this.router.get(
+      this.path + "/all/:id",
+      this.condolencesController.getAllCondolences
+    );
+
   }
 }

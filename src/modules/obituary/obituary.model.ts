@@ -9,12 +9,18 @@ const TimeLineSchema = new Schema({
 });
 
 const EventSchema = new Schema({
-  eventTitle: String,
-  description: String,
-  location: String,
-  date: [],
-  timeFrom: [],
-  timeTo: [],
+  id: { type: String },
+  eventTitle: { type: String, required: true },
+  description: { type: String, required: true },
+  location: { type: String, required: true },
+  show: { type: Boolean, default: true },
+  schedule: [
+    {
+      date: { type: String, required: false },
+      timeFrom: { type: String, required: false },
+      timeTo: { type: String, required: false },
+    },
+  ],
 });
 
 const FamilyMemberSchema = new Schema({

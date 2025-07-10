@@ -20,5 +20,6 @@ export default interface IMemorial {
   setPassword: boolean;
   password: string;
   require_email: boolean;
-  moderation: EModeration
+  moderation: EModeration;
+  add_photos: boolean;
 }

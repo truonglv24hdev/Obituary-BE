@@ -54,4 +54,8 @@ export default class MemorialDto {
   @IsString()
   @IsOptional()
   public moderation: string | undefined;
+
+  @IsBoolean()
+  @IsOptional()
+  public add_photos: boolean | undefined;
 }

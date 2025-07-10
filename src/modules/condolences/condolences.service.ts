@@ -72,8 +72,19 @@ class CondolencesService {
     const condolences = await this.condolencesSchema.find({
       obituaryId: obituaryId,
       deleted: false,
+      status: true,
     });
-    console.log(condolences)
+    if (!condolences) {
+      throw new HttpException(404, "Condolence not found");
+    }
+
+    return condolences;
+  }
+
+  public async getAllCondolences(obituaryId: string): Promise<ICondolences[]> {
+    const condolences = await this.condolencesSchema.find({
+      obituaryId: obituaryId,
+    });
     if (!condolences) {
       throw new HttpException(404, "Condolence not found");
     }

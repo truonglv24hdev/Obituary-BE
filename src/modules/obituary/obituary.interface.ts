@@ -22,13 +22,19 @@ export interface ITimeLine {
   location: string;
 }
 
+export interface ISchedule {
+  date: string;
+  timeFrom: string;
+  timeTo: string;
+}
+
 export interface IEvent {
+  id: string;
   eventTitle: string;
   description: string;
   location: string;
-  date: string[];
-  timeFrom: string[];
-  timeTo: string[];
+  show: boolean;
+  schedule: ISchedule[];
 }
 
 export default interface IObituary {

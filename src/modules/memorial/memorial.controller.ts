@@ -32,7 +32,9 @@ export default class MemorialController {
       const model: MemorialDto = {
         ...req.body,
         require_email: req.body.require_email === "true",
+        add_photos: req.body.add_photos === "true",
       };
+      
 
       if (req.file) {
         model.picture = `/uploads/${req.file.filename}`;
@@ -148,6 +150,27 @@ export default class MemorialController {
         userId
       );
       res.status(201).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getMemorialBySearch = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { firstName, lastName } = req.query as {
+        firstName?: string;
+        lastName?: string;
+      };
+
+      const memorial = await this.memorialService.getMemorialBySearch(
+        firstName || "",
+        lastName || ""
+      );
+      res.status(200).json(memorial);
     } catch (error) {
       next(error);
     }

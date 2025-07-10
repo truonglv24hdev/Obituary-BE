@@ -76,11 +76,15 @@ const MemorialSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    moderation:{
-      type:String,
+    moderation: {
+      type: String,
       enum: Object.values(EModeration),
       default: EModeration.PRE,
-    }
+    },
+    add_photos: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
