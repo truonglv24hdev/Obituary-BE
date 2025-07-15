@@ -214,17 +214,16 @@ class MemorialService {
   public async getMemorialBySearch(
     firstName: string,
     lastName: string
-  ): Promise<IMemorial> {
-    const memorial = await this.memorialSchema
-      .findOne({ first_name: firstName, last_name: lastName })
-      .populate([
-        {
-          path: "condolences",
-          model: condolencesModel,
-          match: { deleted: false },
-        },
-        { path: "rsvps", model: rsvpModel },
-      ]);
+  ): Promise<IMemorial[]> {
+
+    const firstNameRegax = new RegExp(firstName,'i')
+    const lastNameRegax = new RegExp(lastName,'i')
+
+
+    const memorial = await this.memorialSchema.find({
+      first_name: firstNameRegax,
+      last_name: lastNameRegax,
+    });
     if (!memorial) {
       throw new HttpException(404, "memorial is not found");
     }

@@ -47,4 +47,8 @@ export default class UserInfoDto {
   @IsBoolean()
   @IsNotEmpty()
   public premium: boolean | undefined;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  public deleted: boolean | undefined;
 }

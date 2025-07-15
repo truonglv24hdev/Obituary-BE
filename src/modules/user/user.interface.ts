@@ -13,4 +13,5 @@ export default interface IUser {
   facebookId: string;
   role: ERole
   premium: false
+  deleted:boolean
 }
