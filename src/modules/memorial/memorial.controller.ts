@@ -33,6 +33,7 @@ export default class MemorialController {
         ...req.body,
         require_email: req.body.require_email === "true",
         add_photos: req.body.add_photos === "true",
+        deleted:req.body.deleted === "true"
       };
       
 
@@ -62,6 +63,22 @@ export default class MemorialController {
       const result = await this.memorialService.deleteMemorial(
         req.params.id,
         userId
+      );
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public updateStatus = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const memorialId = req.params.id;
+      const result = await this.memorialService.updateStatus(
+        memorialId
       );
       res.status(200).json(result);
     } catch (error) {
@@ -127,6 +144,15 @@ export default class MemorialController {
           res.status(200).json({ success: "true", code: 2 });
           break;
       }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getAllMemorial = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const memorials = await this.memorialService.getAllMemorial();
+      res.status(200).json(memorials);
     } catch (error) {
       next(error);
     }

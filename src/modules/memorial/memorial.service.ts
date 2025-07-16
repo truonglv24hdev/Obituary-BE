@@ -105,14 +105,16 @@ class MemorialService {
   }
 
   public async getMemorialById(memorialId: string): Promise<IMemorial> {
-    const memorial = await this.memorialSchema.findById(memorialId).populate([
-      {
-        path: "condolences",
-        model: condolencesModel,
-        match: { deleted: false },
-      },
-      { path: "rsvps", model: rsvpModel },
-    ]);
+    const memorial = await this.memorialSchema
+      .findById({ memorialId, deleted: false })
+      .populate([
+        {
+          path: "condolences",
+          model: condolencesModel,
+          match: { deleted: false },
+        },
+        { path: "rsvps", model: rsvpModel },
+      ]);
     if (!memorial) {
       throw new HttpException(404, "memorial is not found");
     }
@@ -126,7 +128,7 @@ class MemorialService {
     limit: number
   ): Promise<IMemorial[]> {
     return await this.memorialSchema
-      .find({ user: userId })
+      .find({ user: userId, deleted: false })
       .skip(skip)
       .limit(limit)
       .populate([
@@ -151,6 +153,18 @@ class MemorialService {
       throw new HttpException(404, "Memorial not found");
     }
     return result;
+  }
+
+  public async updateStatus(userId: string) {
+    const memorial = await this.memorialSchema.findById(userId);
+    const memorialNew = await this.memorialSchema.findByIdAndUpdate(userId, {
+      deleted: !memorial?.deleted,
+    });
+    if (!memorialNew) {
+      throw new HttpException(409, "memorialNew is not exist");
+    }
+
+    return memorialNew;
   }
 
   public async verify(id: string, password: string) {
@@ -215,10 +229,8 @@ class MemorialService {
     firstName: string,
     lastName: string
   ): Promise<IMemorial[]> {
-
-    const firstNameRegax = new RegExp(firstName,'i')
-    const lastNameRegax = new RegExp(lastName,'i')
-
+    const firstNameRegax = new RegExp(firstName, "i");
+    const lastNameRegax = new RegExp(lastName, "i");
 
     const memorial = await this.memorialSchema.find({
       first_name: firstNameRegax,
@@ -229,6 +241,18 @@ class MemorialService {
     }
 
     return memorial;
+  }
+
+  public async getAllMemorial(): Promise<IMemorial[]> {
+    const memorials = await this.memorialSchema
+      .find()
+      .populate({ path: "user", model: "users" });
+
+    if (!memorials) {
+      throw new HttpException(404, "memorial is not found");
+    }
+
+    return memorials;
   }
 }
 

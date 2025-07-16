@@ -85,6 +85,10 @@ const MemorialSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

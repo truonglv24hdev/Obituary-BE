@@ -20,6 +20,8 @@ export default class UserRoute implements Route {
   }
 
   private initializeRoutes() {
+    this.router.put(this.path + "/:id", this.userController.updateUserByAdmin);
+
     /**
      * @openapi
      * '/api/user/{id}':
@@ -69,6 +71,14 @@ export default class UserRoute implements Route {
       updateUser,
       this.userController.updateUserById
     );
+
+    this.router.get(
+      this.path + "/profile",
+      authMiddleware,
+      this.userController.getUserById
+    );
+
+    this.router.get(this.path + "/:id", this.userController.getUser);
 
     /**
      * @openapi
@@ -153,11 +163,6 @@ export default class UserRoute implements Route {
      *       400:
      *         description: Bad request
      */
-    this.router.get(
-      this.path + "/profile",
-      authMiddleware,
-      this.userController.getUserById
-    );
 
     /**
      * @openapi

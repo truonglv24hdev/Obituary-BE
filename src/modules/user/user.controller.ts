@@ -2,12 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import UserService from "./user.service";
 import UserInfoDto from "./user.dto";
 
-// interface AuthRequest extends Request {
-//   user?: {
-//     id: string;
-//   };
-// }
-
 export default class UsersController {
   private userService = new UserService();
 
@@ -16,7 +10,7 @@ export default class UsersController {
     res: Response,
     next: NextFunction
   ) => {
-    const userId = req.user.id
+    const userId = req.user.id;
     try {
       const user = await this.userService.getUserById(userId);
       res.status(200).json(user);
@@ -31,7 +25,10 @@ export default class UsersController {
     next: NextFunction
   ) => {
     try {
-      const model: UserInfoDto = req.body;
+      const model: UserInfoDto = {
+        ...req.body,
+        deleted: req.body.deleted === "true",
+      };
       model.memorials = (req.files as Express.Multer.File[])?.map(
         (file) => `/uploads/${file.filename}`
       );
@@ -42,10 +39,33 @@ export default class UsersController {
     }
   };
 
+  public updateUserByAdmin = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userId = req.params.id;
+      const user = await this.userService.updateUserByAdmin(userId);
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const users = await this.userService.getAll();
       res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await this.userService.getUserById(req.params.id);
+      res.status(200).json(user);
     } catch (error) {
       next(error);
     }

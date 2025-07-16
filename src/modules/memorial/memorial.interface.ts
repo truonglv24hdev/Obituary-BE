@@ -22,4 +22,5 @@ export default interface IMemorial {
   require_email: boolean;
   moderation: EModeration;
   add_photos: boolean;
+  deleted: boolean;
 }

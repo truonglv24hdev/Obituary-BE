@@ -13,9 +13,8 @@ class UserService {
     userId: string,
     model: UserInfoDto
   ): Promise<IUser> {
-    
-
     const user = await this.userSchema.findById(userId);
+    console.log(user);
     if (!user) {
       throw new HttpException(400, "User id not exist");
     }
@@ -48,6 +47,20 @@ class UserService {
     if (!updateUserById) throw new HttpException(404, "Update fail");
 
     return updateUserById;
+  }
+
+  public async updateUserByAdmin(
+    userId: string,
+  ) {
+    const users = await this.userSchema.findById(userId)
+    const user = await this.userSchema.findByIdAndUpdate(userId, {
+      deleted: !users?.deleted,
+    });
+    if (!user) {
+      throw new HttpException(409, "User is not exist");
+    }
+
+    return users;
   }
 
   public async getUserById(userId: string): Promise<IUser> {

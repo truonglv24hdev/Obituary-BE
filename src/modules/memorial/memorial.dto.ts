@@ -58,4 +58,8 @@ export default class MemorialDto {
   @IsBoolean()
   @IsOptional()
   public add_photos: boolean | undefined;
+
+  @IsBoolean()
+  @IsOptional()
+  public deleted: boolean | undefined;
 }

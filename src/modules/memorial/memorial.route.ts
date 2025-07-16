@@ -125,6 +125,8 @@ export default class MemorialRoute implements Route {
       this.memorialController.getMemorialBySearch
     );
 
+    this.router.get(this.path + "/all", this.memorialController.getAllMemorial);
+
     /**
      * @openapi
      * '/api/memorial/{id}':
@@ -206,6 +208,11 @@ export default class MemorialRoute implements Route {
       this.path + "/verify/:id",
       authMiddleware,
       this.memorialController.verify
+    );
+
+    this.router.put(
+      this.path + "/status/:id",
+      this.memorialController.updateStatus
     );
 
     this.router.post(
