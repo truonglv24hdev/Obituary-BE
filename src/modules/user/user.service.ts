@@ -63,6 +63,18 @@ class UserService {
     return users;
   }
 
+  public async updateUser(
+    userId: string,
+    model:UserInfoDto
+  ) {
+    const user = await this.userSchema.findByIdAndUpdate(userId,model,{new:true});
+    if (!user) {
+      throw new HttpException(409, "User is not exist");
+    }
+
+    return user;
+  }
+
   public async getUserById(userId: string): Promise<IUser> {
     const user = await this.userSchema.findById(userId);
     if (!user) {

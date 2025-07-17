@@ -178,6 +178,11 @@ export default class MemorialRoute implements Route {
       this.memorialController.getMemorialByUser
     );
 
+    this.router.get(
+      this.path + "/user/:id",
+      this.memorialController.getMemorials
+    );
+
     /**
      * @openapi
      * '/api/memorial/{id}':

@@ -39,6 +39,20 @@ export default class UsersController {
     }
   };
 
+  public updateUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const model: UserInfoDto = req.body
+      const user = await this.userService.updateUser(req.params.id, model);
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public updateUserByAdmin = async (
     req: Request,
     res: Response,

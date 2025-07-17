@@ -20,6 +20,9 @@ export default class UserRoute implements Route {
   }
 
   private initializeRoutes() {
+
+    this.router.put(this.path + "/edit/:id", authMiddleware ,this.userController.updateUser);
+
     this.router.put(this.path + "/:id", this.userController.updateUserByAdmin);
 
     /**

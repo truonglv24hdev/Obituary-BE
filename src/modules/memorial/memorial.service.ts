@@ -104,6 +104,11 @@ class MemorialService {
     return memorialUpdate;
   }
 
+  public async getMemorials(userId:string): Promise<IMemorial[]>{
+    const memorials = await this.memorialSchema.find({user:userId})
+    return memorials
+  }
+
   public async getMemorialById(memorialId: string): Promise<IMemorial> {
     const memorial = await this.memorialSchema
       .findById({ memorialId, deleted: false })

@@ -99,6 +99,19 @@ export default class MemorialController {
     }
   };
 
+  public getMemorials = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const memorials = await this.memorialService.getMemorials(req.params.id);
+      res.status(200).json(memorials);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getMemorialByUser = async (
     req: Request,
     res: Response,
