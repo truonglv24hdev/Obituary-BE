@@ -27,7 +27,7 @@ export default class MemorialController {
     next: NextFunction
   ) => {
     try {
-      const userId = req.user.id;
+      const userIdOrNull = req.user.role === "ADMIN" ? null : req.user.id;;
 
       const model: MemorialDto = {
         ...req.body,
@@ -43,7 +43,7 @@ export default class MemorialController {
 
       const memorial = await this.memorialService.updateMemorial(
         req.params.id,
-        userId,
+        userIdOrNull,
         model
       );
 
@@ -164,7 +164,8 @@ export default class MemorialController {
 
   public getAllMemorial = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const memorials = await this.memorialService.getAllMemorial();
+      const searchMemorial = req.query.memorial as string;
+      const memorials = await this.memorialService.getAllMemorial(searchMemorial);
       res.status(200).json(memorials);
     } catch (error) {
       next(error);

@@ -18,7 +18,10 @@ class AuthService {
       throw new HttpException(400, "Model is empty");
     }
 
-    const user = await this.userSchema.findOne({ email: model.email });
+    const user = await this.userSchema.findOne({
+      email: model.email,
+      deleted: false,
+    });
     if (!user) {
       throw new HttpException(400, "Your email is not exist");
     }
@@ -54,7 +57,7 @@ class AuthService {
   }
 
   public async sendLink(email: string) {
-    const findEmail = await this.userSchema.findOne({ email: email });
+    const findEmail = await this.userSchema.findOne({ email: email, deleted:false });
     if (!findEmail) {
       return 1;
     }

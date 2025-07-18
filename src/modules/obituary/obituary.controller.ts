@@ -61,7 +61,7 @@ export default class ObituaryController {
     next: NextFunction
   ) => {
     try {
-      const userId = req.user.id;
+      const userIdOrNull = req.user.role === "ADMIN" ? null : req.user.id;
 
       let galleryOld: string[] = [];
       if (req.body.galleryOld) {
@@ -101,7 +101,7 @@ export default class ObituaryController {
 
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,
-          userId,
+          userIdOrNull,
           model
         );
         res.status(200).json(obituary);
@@ -126,7 +126,7 @@ export default class ObituaryController {
         };
         const obituary = await this.ObituaryService.updateObituaryById(
           req.params.id,
-          userId,
+          userIdOrNull,
           model
         );
         res.status(200).json(obituary);
@@ -142,10 +142,10 @@ export default class ObituaryController {
     next: NextFunction
   ) => {
     try {
-      const userId = req.user.id;
+      // const userId = req.user.id;
       const obituary = await this.ObituaryService.getObituaryByMemorialId(
         req.params.id,
-        userId
+        // userId
       );
       res.status(200).json(obituary);
     } catch (error) {

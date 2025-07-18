@@ -62,56 +62,53 @@ class MemorialService {
 
   public async updateMemorial(
     memorialId: string,
-    userId: string,
+    userIdOrNull: string | null,
     model: MemorialDto
   ): Promise<IMemorial> {
     if (isEmptyObject(model)) {
       throw new HttpException(400, "Model is empty");
     }
 
-    const memorial = await this.memorialSchema.findOne({
-      _id: memorialId,
-      user: userId,
-    });
-
-    if (!memorial) {
-      throw new HttpException(400, "memorial not found");
+    const query: any = { _id: memorialId };
+    if (userIdOrNull) {
+      query.user = userIdOrNull;
     }
 
-    let memorialUpdate;
+    const memorial = await this.memorialSchema.findOne(query);
+
+    if (!memorial) {
+      throw new HttpException(400, "Memorial not found");
+    }
+
+    let updateData = { ...model };
 
     if (model.password) {
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(model.password, salt);
-      memorialUpdate = await this.memorialSchema.findOneAndUpdate(
-        { _id: memorialId, user: userId },
-        {
-          ...model,
-          password: hashedPassword,
-        },
-        { new: true }
-      );
-    } else {
-      memorialUpdate = await this.memorialSchema.findOneAndUpdate(
-        { _id: memorialId, user: userId },
-        model,
-        { new: true }
-      );
+      updateData.password = hashedPassword;
     }
 
-    if (!memorialUpdate) throw new HttpException(404, "Update fail");
+    const memorialUpdate = await this.memorialSchema.findOneAndUpdate(
+      query,
+      updateData,
+      { new: true }
+    );
+
+    if (!memorialUpdate) {
+      throw new HttpException(404, "Update fail");
+    }
 
     return memorialUpdate;
   }
 
-  public async getMemorials(userId:string): Promise<IMemorial[]>{
-    const memorials = await this.memorialSchema.find({user:userId})
-    return memorials
+  public async getMemorials(userId: string): Promise<IMemorial[]> {
+    const memorials = await this.memorialSchema.find({ user: userId });
+    return memorials;
   }
 
   public async getMemorialById(memorialId: string): Promise<IMemorial> {
     const memorial = await this.memorialSchema
-      .findById({ memorialId, deleted: false })
+      .findOne({ _id: memorialId, deleted: false })
       .populate([
         {
           path: "condolences",
@@ -248,9 +245,14 @@ class MemorialService {
     return memorial;
   }
 
-  public async getAllMemorial(): Promise<IMemorial[]> {
+  public async getAllMemorial(searchMemorial?: string): Promise<IMemorial[]> {
     const memorials = await this.memorialSchema
-      .find()
+      .find({
+        $or: [
+          { first_name: { $regex: searchMemorial, $options: "i" } },
+          { last_name: { $regex: searchMemorial, $options: "i" } },
+        ],
+      })
       .populate({ path: "user", model: "users" });
 
     if (!memorials) {

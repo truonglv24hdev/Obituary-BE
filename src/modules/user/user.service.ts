@@ -101,7 +101,6 @@ class UserService {
       query = this.userSchema
         .find({
           $or: [
-            { email: { $regex: keyword, $options: "i" } },
             { first_name: { $regex: keyword, $options: "i" } },
             { last_name: { $regex: keyword, $options: "i" } },
           ],

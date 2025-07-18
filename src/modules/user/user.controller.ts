@@ -45,7 +45,7 @@ export default class UsersController {
     next: NextFunction
   ) => {
     try {
-      const model: UserInfoDto = req.body
+      const model: UserInfoDto = req.body;
       const user = await this.userService.updateUser(req.params.id, model);
       res.status(200).json(user);
     } catch (error) {
@@ -91,9 +91,9 @@ export default class UsersController {
     next: NextFunction
   ) => {
     try {
-      const keyword = req.query.keyword as string;
+      const searchUser = req.query.user as string;
       const page: number = Number(req.query.page) || 1;
-      const user = await this.userService.getAllPaging(keyword, page);
+      const user = await this.userService.getAllPaging(searchUser, page);
       res.status(200).json(user);
     } catch (error) {
       next(error);

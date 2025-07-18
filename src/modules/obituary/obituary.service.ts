@@ -29,15 +29,19 @@ class ObituaryService {
 
   public async updateObituaryById(
     obituaryId: string,
-    userId: string,
+    userIdOrNull: string | null,
     model: ObituaryDto
   ): Promise<IObituary> {
     if (isEmptyObject(model)) {
       throw new HttpException(400, "Model is empty");
     }
 
+    const filter: any = { memorial: obituaryId };
+    if (userIdOrNull) {
+      filter.user = userIdOrNull;
+    }
     const obituaryUpdate = await this.obituarySchema.findOneAndUpdate(
-      { user: userId, memorial: obituaryId },
+      filter,
       model,
       { new: true }
     );
@@ -50,10 +54,10 @@ class ObituaryService {
 
   public async getObituaryByMemorialId(
     obituaryId: string,
-    userId: string
+    // userId: string
   ): Promise<IObituary> {
     const Obituary = await this.obituarySchema
-      .findOne({ memorial: obituaryId, user: userId })
+      .findOne({ memorial: obituaryId })
       .populate({ path: "memorial", model: memorialModel });
     if (!Obituary) {
       throw new HttpException(404, "Obituary not found");
